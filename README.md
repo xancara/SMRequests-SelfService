@@ -8,13 +8,13 @@ Known contributions will be from PennWest University 2022-2023 Senior CIS Capsto
 
 # System Maintainers
 
-MrTwinkles - https://github.com/MrTwinkles47
+MrTwinkles47 - https://github.com/MrTwinkles47
 
 xancara - https://github.com/xancara
 
 # Approvers
 
-MrTwinkles - https://github.com/MrTwinkles47
+MrTwinkles47 - https://github.com/MrTwinkles47
 
 xancara - https://github.com/xancara
 
