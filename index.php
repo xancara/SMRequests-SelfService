@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>Easy, Code Is</title>
+		<title>SMRequests Development | WIP</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -64,7 +64,7 @@
 			<img class="background-video-image" src="assets/background_video_image.png" />
 			<div class="background-video-overlay"></div>
 			<div class="background-video-text-overlay">
-				<div>Easy, Code Is</div>
+				<div>SMRequests Development | Work In Progress</div>
 				<div class="action-container pc-only">
 					<?php if ( isLoggedIn() ) : ?>
 						<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; ?></b></div>
@@ -111,17 +111,16 @@
 						<?php endif; ?>
 					</div>
 					<h1>
-						Welcome to Easy, Code Is!
+						Welcome to SMRequests!
 					</h1>
 					<div>
-						This is the website where you, the users, decide what features get added. Comment on any of my videos and let me know what you want to learn and see implemented! I will constantly be building on this website, adding features and creating videos based on what you, the users, want to see and learn.
+						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="footer-container">
-			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is on GitHub</a></div>
-			<div><span id="load_test">Loading Overlay Test (lasts 3 sec)</span></div>
+			<div><a class="a-default" href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles">View SMRequests on GitHub</a></div>
 			<?php if ( isLoggedIn() ) : ?>
 				<?php if ( isAdmin() ) : ?>
 					<div>
@@ -131,8 +130,21 @@
 				<div>
 					<a class="a-default" href="myaccount.php">My Account</a>
 				</div>
+				<div>
+					<a class="a-default" href="mysettings.php">Manage Settings</a>
+				</div>
+				<div>
+					<a class="a-default" href="myviewers.php">Manage Requestors</a>
+				</div>
+				<div>
+					<a class="a-default" href="mysongs.php">Manage Songs</a>
+				</div>
+				<div>
+					<a class="a-default" href="mywebhooks.php">Manage Webhooks</a>
+				</div>
 				<div id="logout_link" class="a-default">Logout</div>
 			<?php endif; ?>
+			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is on GitHub</a></div>
 		</div>
 	</body>
 </html>
