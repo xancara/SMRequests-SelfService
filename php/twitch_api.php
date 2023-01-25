@@ -1,3 +1,11 @@
+<!--
+* Module Name: 	twitch_api.php
+* Date: 		2023-01-25
+* Author:		Jstolpe - Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis used per request from maintainers.
+* Purpose:		API calls to Twitch.tv
+* Notes:		
+-->
+
 <?php
 	/**
 	 * Class for handling all calls to the Twitch API
