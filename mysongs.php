@@ -1,3 +1,12 @@
+<!--
+* Module Name: 	mysongs.php
+* Date: 		[[DATE HERE]]
+* Author:		[[AUTHOR HERE]]
+				Easy, Code Is Repository: https://github.com/jstolpe/easycodeis
+* Purpose:		Page to display and manage a user's song list and availability
+* Notes:		This page is a SHELL that was created as copy of the templated myaccount.php.
+				It needs to be gutted and replaced with the functionality intended for this page.	
+-->
 <?php
 	// load up global things
 	include_once 'autoloader.php';
