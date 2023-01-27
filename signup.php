@@ -1,3 +1,11 @@
+<!--
+* Module Name: 	signup.php
+* Date: 		[[DATE HERE]]
+* Author:		[[AUTHOR HERE]]
+				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
+* Purpose:		Page to enable user registration. We may not use this page; TBD. If we do, modifications may be required.
+* Notes:		
+-->
 <?php
 	// load up global things
 	include_once 'autoloader.php';
@@ -17,7 +25,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>Easy, Code Is | Sign Up</title>
+		<title>SMRequests Development | Sign Up</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -95,7 +103,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					Easy, Code Is
+					SMRequests.Dev
 				</a>
 			</div>
 		</div>
@@ -136,14 +144,14 @@
 						<div class="section-action-container">
 							- OR -
 						</div>
-						<div class="section-action-container">
+						<div class="section-action-container" style="display:none;">
 							<a href="<?php echo getFacebookLoginUrl(); ?>" class="a-fb">
 								<div class="fb-button-container">
 									Login with Facebook (PHP)
 								</div>
 							</a>
 						</div>
-						<div class="section-action-container">
+						<div class="section-action-container" style="display:none;">
 							<div id="error_message_twitter_php" class="error-message">
 								<?php if ( 'fail' == $twitterPreLoginData['status'] ) : ?>
 									<div>
@@ -152,7 +160,7 @@
 								<?php endif; ?>
 							</div>
 						</div>
-						<div class="section-action-container">
+						<div class="section-action-container" style="display:none;">
 							<a href="<?php echo $twitterPreLoginData['twitter_login_url'] ;?>" class="a-tw">
 								<div class="tw-button-container">
 									Login with Twitter (PHP)

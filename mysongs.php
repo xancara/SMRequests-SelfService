@@ -1,10 +1,10 @@
 <!--
-* Module Name: 	Myaccount.php
+* Module Name: 	mysongs.php
 * Date: 		[[DATE HERE]]
 * Author:		[[AUTHOR HERE]]
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		User's account management page where they can update information
-* Notes:		This page is a SHELL template from Jstolpe's Easy, Code IS - BUT
+				Easy, Code Is Repository: https://github.com/jstolpe/easycodeis
+* Purpose:		Page to display and manage a user's song list and availability
+* Notes:		This page is a SHELL that was created as copy of the templated myaccount.php.
 				It needs to be gutted and replaced with the functionality intended for this page.	
 -->
 <?php

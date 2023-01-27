@@ -1,11 +1,11 @@
 <!--
-* Module Name: 	Myaccount.php
+* Module Name: 	mysettings.php
 * Date: 		[[DATE HERE]]
 * Author:		[[AUTHOR HERE]]
 				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		User's account management page where they can update information
-* Notes:		This page is a SHELL template from Jstolpe's Easy, Code IS - BUT
-				It needs to be gutted and replaced with the functionality intended for this page.	
+* Purpose:		Page to display and manage settings for a user's implementation of SMRequests
+* Notes:		This page is a SHELL that was created as copy of the templated myaccount.php.
+				It needs to be gutted and replaced with the functionality intended for this page.
 -->
 <?php
 	// load up global things
