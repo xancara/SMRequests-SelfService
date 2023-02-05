@@ -1,18 +1,10 @@
 # SMRequests-SelfService
 
-Login System, Automated User Provisioning, and Self-Service Management functionality for the SMRequests system.
- 
-This repository is separate from the primary user-facing repository to ensure integrity of production systems that live-streamers rely on.
+ The login system and self service potral for SMRequests
  
 # Contributions
 
-Known contributions will be from PennWest University 2022-2023 Senior CIS Capstone Team consisting of:
-
-J. Sayre - https://github.com/falseparallax/
-
-S. Dixon
-
-M. Seibel
+Known contributions will be from PennWest University 2022-2023 Senior CIS Capstone
 
 # System Maintainers
 
