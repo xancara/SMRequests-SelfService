@@ -12,10 +12,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- page title -->
+		<!-- title of our page -->
 		<title>SMRequests Development | WIP</title>
 
-		<!-- fonts -->
+		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
 		<!-- mobile layout support -->
@@ -72,7 +72,6 @@
 			<img class="background-video-image" src="assets/background_video_image.png" />
 			<div class="background-video-overlay"></div>
 			<div class="background-video-text-overlay">
-
 				<div>SMRequests Development | Work In Progress</div>
 				<!--Desktop Client Experience-->
 				<div class="action-container pc-only">
@@ -86,7 +85,6 @@
 								</div>
 							</div>
 						</a>
-						<!-- and Display a Login Button -->
 						<a class="a-action" href="login.php">
 							<div class="button-container">
 								<div class="button-container-pad">
@@ -113,7 +111,6 @@
 									</div>
 								</div>
 							</a>
-							<!-- and Display a Login Button -->
 							<a class="a-action" href="login.php">
 								<div class="button-container default-margin-top">
 									<div class="button-container-pad">
@@ -127,17 +124,16 @@
 						Welcome to SMRequests!
 					</h1>
 					<div>
-						This is a skeleton template of the main site that is based off of the open source code listed in the github link below. <br/>It is inthe process of being modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
+						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="footer-container">
 			<div><a class="a-default" href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles">View SMRequests on GitHub</a></div>
-			<?php if ( isLoggedIn() ) : // If there is a logged-in user  ?>
-				<?php if ( isAdmin() ) : // and if the user is an Administrator ?>
+			<?php if ( isLoggedIn() ) : ?>
+				<?php if ( isAdmin() ) : ?>
 					<div>
-						<!-- Display a link to the Admin Panel -->
 						<a class="a-default" href="adminpanel.php">Admin Panel</a>
 					</div>
 				<?php endif; ?>
