@@ -19,7 +19,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- mobile layout support -->
+		<!-- need this so everything looks good on mobile devices -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our home page-->
@@ -122,7 +122,7 @@
 						<?php endif; ?>
 					</div>
 					<h1>
-						Welcome to SMRequests!
+						Welcome to Easy, Code Is!
 					</h1>
 					<div>
 						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
@@ -141,21 +141,8 @@
 				<div>
 					<a class="a-default" href="myaccount.php">My Account</a>
 				</div>
-				<div>
-					<a class="a-default" href="mysettings.php">Manage Settings</a>
-				</div>
-				<div>
-					<a class="a-default" href="myviewers.php">Manage Requestors</a>
-				</div>
-				<div>
-					<a class="a-default" href="mysongs.php">Manage Songs</a>
-				</div>
-				<div>
-					<a class="a-default" href="mywebhooks.php">Manage Webhooks</a>
-				</div>
 				<div id="logout_link" class="a-default">Logout</div>
 			<?php endif; ?>
-			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is on GitHub</a></div>
 		</div>
 	</body>
 </html>

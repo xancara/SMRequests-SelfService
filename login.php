@@ -62,7 +62,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- mobile layout support -->
+		<!-- need this so everything looks good on mobile devices -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our login page-->
@@ -139,7 +139,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					<span id="icon"></span>&nbsp;SMRequests
+					Easy, Code Is
 				</a>
 			</div>
 		</div>

@@ -23,7 +23,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
+		<title>Easy, Code Is | My Account</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -125,7 +125,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+					Easy, Code Is
 				</a>
 			</div>
 		</div>
@@ -175,7 +175,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="site-content-container" style="display:none;">
+		<div class="site-content-container">
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
