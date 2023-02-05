@@ -1,11 +1,12 @@
-<!--
+<?php
+/*
 * Module Name: 	Index.php
 * Date: 		2023-02-04
 * Author:		J. Sayre
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
+*				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
 * Purpose:		Post-authentication landing page and navigation.
--->
-<?php
+*/
+
 	// Load global resources and establish a session
 	include_once 'autoloader.php';
 ?>
