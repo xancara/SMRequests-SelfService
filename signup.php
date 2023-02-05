@@ -1,11 +1,3 @@
-<!--
-* Module Name: 	signup.php
-* Date: 		[[DATE HERE]]
-* Author:		[[AUTHOR HERE]]
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Page to enable user registration. We may not use this page; TBD. If we do, modifications may be required.
-* Notes:		
--->
 <?php
 	// load up global things
 	include_once 'autoloader.php';

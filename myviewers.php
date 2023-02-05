@@ -1,17 +1,14 @@
 <!--
-* Module Name: 	myviewers.php
-* Date: 		[[DATE HERE]]
-* Author:		[[AUTHOR HERE]]
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Page to display and alter audience (viewer) permissions with the SMRequests system
-* Notes:		This page is a SHELL that was created as copy of the templated myaccount.php.
-				It needs to be gutted and replaced with the functionality intended for this page.
+* Module Name: 	Myaccount.php
+* Date: 		[DATE]
+* Author:		[AUTHOR]
+* Purpose:		Enables user to view and interact with their viewer list.
 -->
 <?php
-	// load up global things
+	// Load global resources and establish a session
 	include_once 'autoloader.php';
 
-	if ( !isLoggedIn() ) { // if user is not logged in they cannot see this page
+	if ( !isLoggedIn() ) { // Redirect users that aren't logged-in
 		header( 'location: index.php' );
 	}
 
@@ -29,7 +26,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- need this so everything looks good on mobile devices -->
+		<!-- mobile layout support -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our my account page-->

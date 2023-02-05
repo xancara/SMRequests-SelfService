@@ -1,22 +1,21 @@
 <!--
 * Module Name: 	Index.php
-* Date: 		[[DATE HERE]]
-* Author:		[[AUTHOR HERE]]
+* Date: 		2023-02-04
+* Author:		J. Sayre
 				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Post-authentication landing page and navigation
-* Notes:		
+* Purpose:		Post-authentication landing page and navigation.
 -->
 <?php
-	// Creates a Session, Loads global APIs and other global resources
+	// Load global resources and establish a session
 	include_once 'autoloader.php';
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- page title -->
+		<!-- title of our page -->
 		<title>SMRequests Development | WIP</title>
 
-		<!-- fonts -->
+		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
 		<!-- mobile layout support -->
@@ -65,7 +64,7 @@
 		</script>
 	</head>
 	<body>
-		<!-- REQUEST FROM MAINTAINERS: Remove video and replace with some other asset -->
+		<!--Low-Priority Request from Maintainers: Replace Video with some other asset-->
 		<div class="background-video-container">
 			<video class="background-video-element" autoplay muted loop >
 				<source src="assets/background_video.mp4" />
@@ -73,16 +72,12 @@
 			<img class="background-video-image" src="assets/background_video_image.png" />
 			<div class="background-video-overlay"></div>
 			<div class="background-video-text-overlay">
-
 				<div>SMRequests Development | Work In Progress</div>
-
-				<!-- Desktop Client Experience -->
+				<!--Desktop Client Experience-->
 				<div class="action-container pc-only">
-					<?php if ( isLoggedIn() ) : // If there is a logged-in user ?>
-						<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; // Greet them by name ?></b></div>
-					<?php else : //Otherwise, ?>
-
-						<!-- Display a Sign Up Button -->
+					<?php if ( isLoggedIn() ) : ?> <!--Check for logged-in user and greet-->
+						<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; ?></b></div>
+					<?php else : ?> <!--Display buttons-->
 						<a class="a-action" href="signup.php">
 							<div class="button-container">
 								<div class="button-container-pad">
@@ -90,7 +85,6 @@
 								</div>
 							</div>
 						</a>
-						<!-- and Display a Login Button -->
 						<a class="a-action" href="login.php">
 							<div class="button-container">
 								<div class="button-container-pad">
@@ -105,13 +99,11 @@
 		<div class="content">
 			<div class="content-inner">
 				<div class="content-inner-padding">
-
-					<!-- Mobile Client Experience -->
+					<!--Mobile Experience-->
 					<div class="action-container mobile-only">
-						<?php if ( isLoggedIn() ) : // If there is a logged-in user ?>
-							<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; // Greet them by name ?></b></div>
-						<?php else : //Otherwise, ?>
-							<!-- Display a Sign Up Button -->
+						<?php if ( isLoggedIn() ) : ?> <!--Check for logged-in user and greet-->
+							<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; ?></b></div>
+						<?php else : ?> <!--Display buttons-->
 							<a class="a-action" href="signup.php">
 								<div class="button-container">
 									<div class="button-container-pad">
@@ -119,7 +111,6 @@
 									</div>
 								</div>
 							</a>
-							<!-- and Display a Login Button -->
 							<a class="a-action" href="login.php">
 								<div class="button-container default-margin-top">
 									<div class="button-container-pad">
@@ -133,17 +124,16 @@
 						Welcome to SMRequests!
 					</h1>
 					<div>
-						This is a skeleton template of the main site that is based off of the open source code listed in the github link below. <br/>It is inthe process of being modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
+						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="footer-container">
 			<div><a class="a-default" href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles">View SMRequests on GitHub</a></div>
-			<?php if ( isLoggedIn() ) : // If there is a logged-in user  ?>
-				<?php if ( isAdmin() ) : // and if the user is an Administrator ?>
+			<?php if ( isLoggedIn() ) : ?>
+				<?php if ( isAdmin() ) : ?>
 					<div>
-						<!-- Display a link to the Admin Panel -->
 						<a class="a-default" href="adminpanel.php">Admin Panel</a>
 					</div>
 				<?php endif; ?>

@@ -10,9 +10,9 @@ Known contributions will be from PennWest University 2022-2023 Senior CIS Capsto
 
 J. Sayre - https://github.com/falseparallax/
 
-S. Dixon
+S. Dixon - https://github.com/dix4724/
 
-M. Seibel
+M. Seibel - https://github.com/seibelstudios/
 
 # System Maintainers
 
@@ -32,7 +32,7 @@ DaveLinger - https://github.com/DaveLinger
 
 # Attribution
 
-Base code from Easy, Code Is system for a starting point
+Base code from Easy, Code Is system for a starting point for login and account management
 Link: https://github.com/jstolpe/easycodeis
 
 Used for SMRequests Streamer Tools
