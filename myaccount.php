@@ -1,11 +1,12 @@
-<!--
+<?php
+/*
 * Module Name: 	Myaccount.php
 * Date: 		[DATE]
 * Author:		[AUTHOR]
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
+*				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
 * Purpose:		Enables user to view and interact with their user account details.
--->
-<?php
+*/
+
 	// Load global resources and establish a session
 	include_once 'autoloader.php';
 

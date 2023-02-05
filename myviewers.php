@@ -1,10 +1,11 @@
-<!--
-* Module Name: 	Myaccount.php
+<?php
+/*
+* Module Name: 	Myviewers.php
 * Date: 		[DATE]
 * Author:		[AUTHOR]
 * Purpose:		Enables user to view and interact with their viewer list.
--->
-<?php
+*/
+
 	// Load global resources and establish a session
 	include_once 'autoloader.php';
 

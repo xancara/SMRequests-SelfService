@@ -1,10 +1,11 @@
-<!--
+<?php
+/*
 * Module Name: 	Mysongs.php
 * Date: 		[DATE]
 * Author:		[AUTHOR]
 * Purpose:		Enables user to view and interact with their user song library.
--->
-<?php
+*/
+
 	// Load global resources and establish a session
 	include_once 'autoloader.php';
 
