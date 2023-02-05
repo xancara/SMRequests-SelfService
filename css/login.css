@@ -17,6 +17,12 @@ input {
 	padding: 5px;
 }
 
+#icon {
+	width: 20px;
+	height: 20px;
+	background: url('../assets/ddr_arrow.png') 0 0;
+}
+
 .header-home-link {
 	text-decoration: none;
 	color: #fff;

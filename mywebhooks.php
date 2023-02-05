@@ -1,23 +1,8 @@
-<!--
-* Module Name: 	Myaccount.php
-* Date: 		[DATE]
-* Author:		[AUTHOR]
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Enables user to view and interact with their user account details.
--->
 <?php
-/*
-* Module Name: 	Myaccount.php
-* Date: 		[DATE]
-* Author:		[AUTHOR]
-*				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Enables user to view and interact with their user account details.
-*/
-
-	// Load global resources and establish a session
+	// load up global things
 	include_once 'autoloader.php';
 
-	if ( !isLoggedIn() ) { // Redirect users that aren't logged-in
+	if ( !isLoggedIn() ) { // if user is not logged in they cannot see this page
 		header( 'location: index.php' );
 	}
 
@@ -35,7 +20,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- mobile layout support -->
+		<!-- need this so everything looks good on mobile devices -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our my account page-->

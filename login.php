@@ -1,3 +1,10 @@
+<!--
+* Module Name: 	Login.php
+* Date: 		2023-02-04
+* Author:		J. Sayre
+				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
+* Purpose:		Enables login via username/password & Twitch OAuth. Other social login functionality exists but is hidden from use.
+-->
 <?php
 /*
 * Module Name: 	Login.php
@@ -62,7 +69,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- need this so everything looks good on mobile devices -->
+		<!-- mobile layout support -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our login page-->
@@ -139,7 +146,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					Easy, Code Is
+					<span id="icon"></span>&nbsp;SMRequests
 				</a>
 			</div>
 		</div>
