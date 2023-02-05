@@ -10,7 +10,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>Easy, Code Is | Admin Panel</title>
+		<title>SMRequests Development | Admin Panel</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -39,7 +39,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					Easy, Code Is
+					SMRequests.Dev
 				</a>
 			</div>
 		</div>
@@ -49,6 +49,13 @@
 					<div class="site-content-section-inner">
 						<div class="section-heading">Admin Panel</div>
 						<div class="admin-sub-heading">Logged in as <?php echo $_SESSION['user_info']['first_name']; ?> <?php echo $_SESSION['user_info']['last_name']; ?></div>
+						<!-- Add table with users accounts and management buttons -- Edit Account - Add/Remove Premium - Suspend Account - Force Re-auth
+						
+						Edit Account = Administrator view of account information so information can be corrected/changed. E-mail, first, last, user level, User SMR Settings
+						Add/remove Premium = Set user_level on account to 2
+						Suspend Account = Set user_level on account to -1
+						Force Re-Auth = Remove twitch_access_token & twitch_refresh_token from DB for user account
+						-->
 					</div>
 				</div>
 			</div>

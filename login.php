@@ -1,9 +1,16 @@
+<!--
+* Module Name: 	Login.php
+* Date: 		2023-02-04
+* Author:		J. Sayre
+				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
+* Purpose:		Enables login via username/password & Twitch OAuth. Other social login functionality exists but is hidden from use.
+-->
 <?php
-	// load up global things
+	// Load global resources and establish a session
 	include_once 'autoloader.php';
 
-	if ( isset( $_GET['state'] ) && FB_APP_STATE == $_GET['state'] ) { // coming from facebook
-		// try and log the user in with $_GET vars from facebook 
+	// Determine if user is coming from Facebook and attempt Facebook Login
+	if ( isset( $_GET['state'] ) && FB_APP_STATE == $_GET['state'] ) { 
 		$fbLogin = tryAndLoginWithFacebook( $_GET );
 	}
 
@@ -54,7 +61,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- need this so everything looks good on mobile devices -->
+		<!-- mobile layout support -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our login page-->
@@ -84,7 +91,7 @@
 			} );
 
 			function processLogin() {
-				// clear error message and red borders on signup click
+				// Clear error styling on signup click
 				$( '#error_message' ).html( '' );
 				$( '#error_message_fb_php' ).html( '' );
 				$( '#error_message_twitter_php' ).html( '' );
@@ -131,7 +138,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					Easy, Code Is
+					<span id="icon"></span>&nbsp;SMRequests
 				</a>
 			</div>
 		</div>

@@ -35,7 +35,7 @@
 		$_SESSION['user_info'] = $userInfo;
 	}
 
-	echo json_encode( // return json for ajaz on front end
+	echo json_encode( // return json for ajax on front end
 		array(
 			'status' => $status,
 			'message' => $message
