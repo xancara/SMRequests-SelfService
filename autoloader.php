@@ -3,7 +3,7 @@
 	session_start();
 
 	// site global defines
-	define( 'USER_LEVEL_ADMIN', '3' );
+	define( 'USER_LEVEL_ADMIN', '1' );
 
 	// fb defines
 	define( 'FB_GRAPH_VERSION', 'v6.0' ); // facebook graph version

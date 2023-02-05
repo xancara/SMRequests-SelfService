@@ -1,12 +1,5 @@
-<!--
-* Module Name: 	Index.php
-* Date: 		2023-02-04
-* Author:		J. Sayre
-				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Post-authentication landing page and navigation.
--->
 <?php
-	// Load global resources and establish a session
+	// load up global things
 	include_once 'autoloader.php';
 ?>
 <!DOCTYPE html>
@@ -18,7 +11,7 @@
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- mobile layout support -->
+		<!-- need this so everything looks good on mobile devices -->
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<!-- css styles for our home page-->
@@ -99,11 +92,10 @@
 		<div class="content">
 			<div class="content-inner">
 				<div class="content-inner-padding">
-					<!--Mobile Experience-->
 					<div class="action-container mobile-only">
-						<?php if ( isLoggedIn() ) : ?> <!--Check for logged-in user and greet-->
+						<?php if ( isLoggedIn() ) : ?>
 							<div class="logged-in-text">Logged in as <b><?php echo $_SESSION['user_info']['first_name']; ?></b></div>
-						<?php else : ?> <!--Display buttons-->
+						<?php else : ?>
 							<a class="a-action" href="signup.php">
 								<div class="button-container">
 									<div class="button-container-pad">
@@ -121,7 +113,7 @@
 						<?php endif; ?>
 					</div>
 					<h1>
-						Welcome to SMRequests!
+						Welcome to SMRequests.Dev | Work In progress!
 					</h1>
 					<div>
 						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
@@ -131,6 +123,7 @@
 		</div>
 		<div class="footer-container">
 			<div><a class="a-default" href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles">View SMRequests on GitHub</a></div>
+			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is! on GitHub</a></div>
 			<?php if ( isLoggedIn() ) : ?>
 				<?php if ( isAdmin() ) : ?>
 					<div>
@@ -140,21 +133,8 @@
 				<div>
 					<a class="a-default" href="myaccount.php">My Account</a>
 				</div>
-				<div>
-					<a class="a-default" href="mysettings.php">Manage Settings</a>
-				</div>
-				<div>
-					<a class="a-default" href="myviewers.php">Manage Requestors</a>
-				</div>
-				<div>
-					<a class="a-default" href="mysongs.php">Manage Songs</a>
-				</div>
-				<div>
-					<a class="a-default" href="mywebhooks.php">Manage Webhooks</a>
-				</div>
 				<div id="logout_link" class="a-default">Logout</div>
 			<?php endif; ?>
-			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is on GitHub</a></div>
 		</div>
 	</body>
 </html>
