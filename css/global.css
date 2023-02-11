@@ -65,6 +65,12 @@ body {
 	background: #1a90da;
 }
 
+.footer-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .loading-overlay {
 	display: none;
 	background: rgba( 26, 26, 26, 0.7 );

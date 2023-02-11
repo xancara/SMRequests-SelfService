@@ -22,7 +22,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
+		<title>SMRequests Development | My Viewers</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -54,12 +54,12 @@
 				} );
 
 				$( '#update_button' ).on( 'click', function() { // onclick for our update button
-					processMyAccount();
+					processMyViewers();
 				} );
 
 				$( '.form-input' ).keyup( function( e ) {
 					if ( e.keyCode == 13 ) { // our enter key
-						processMyAccount();
+						processMyViewers();
 					}
 				} );
 
@@ -97,15 +97,15 @@
 				} );
 			} );
 
-			function processMyAccount() {
+			function processMyViewers() {
 				// clear error message
 				$( '#error_message' ).html( '' );
 
 				loader.showLoader();
 
 				$.ajax( {
-					url: 'php/process_myaccount.php',
-					data: $( '#myaccount_form' ).serialize(),
+					url: 'php/process_myviewers.php',
+					data: $( '#myviewers_form' ).serialize(),
 					type: 'post',
 					dataType: 'json',
 					success: function( data ) {
@@ -132,8 +132,9 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">My Account</div>
-						<form id="myaccount_form" name="myaccount_form">
+						<div class="section-heading">My Viewers</div>
+						<form id="myviewers_form" name="myviewers_form">
+						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 							<div id="error_message" class="error-message">
 							</div>
 							<div>
@@ -178,102 +179,7 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">Connected Facebook Account</div>
-						<?php if ( empty( $fbUserInfo ) || $fbUserInfo['has_errors'] ) : // could not get facebook user info ?>
-							<div class="a-fb">
-								<div class="fb-button-container">
-									<div>Login With Facebook to Connect Facebook Account</div>
-								</div>
-							</div>
-						<?php else : // display facebook user info ?> 
-							<div>
-								<div class="pro-img-cont">
-									<img class="pro-img" src="<?php echo $fbUserInfo['fb_response']['picture']['data']['url']; ?>" />
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Email
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['email']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									First Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['first_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Last Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['last_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Facebook Application
-								</div>
-								<div>
-									<?php echo $fbDebugTokenInfo['fb_response']['data']['application']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Issued
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['issued_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Expires
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['expires_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Scope
-								</div>
-								<div>
-									<?php echo implode( ',', $fbDebugTokenInfo['fb_response']['data']['scopes'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_info">
-										show
-									</div>
-									<div id="fb_user_info" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbUserInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Debug Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_access_token_debug">
-										show
-									</div>
-									<div id="fb_user_access_token_debug" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbDebugTokenInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-						<?php endif; ?>
+					<?php /* Possible viewers page content here */ ?>
 					</div>
 				</div>
 			</div>
@@ -281,5 +187,6 @@
 		<br />
 		<br />
 		<br />
+		<?php include('footer.php'); ?>
 	</body>
 </html>

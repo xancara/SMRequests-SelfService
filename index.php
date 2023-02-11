@@ -130,32 +130,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="footer-container">
-			<div><a class="a-default" href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles">View SMRequests on GitHub</a></div>
-			<?php if ( isLoggedIn() ) : ?>
-				<?php if ( isAdmin() ) : ?>
-					<div>
-						<a class="a-default" href="adminpanel.php">Admin Panel</a>
-					</div>
-				<?php endif; ?>
-				<div>
-					<a class="a-default" href="myaccount.php">My Account</a>
-				</div>
-				<div>
-					<a class="a-default" href="mysettings.php">Manage Settings</a>
-				</div>
-				<div>
-					<a class="a-default" href="myviewers.php">Manage Requestors</a>
-				</div>
-				<div>
-					<a class="a-default" href="mysongs.php">Manage Songs</a>
-				</div>
-				<div>
-					<a class="a-default" href="mywebhooks.php">Manage Webhooks</a>
-				</div>
-				<div id="logout_link" class="a-default">Logout</div>
-			<?php endif; ?>
-			<div><a class="a-default" href="https://github.com/jstolpe/easycodeis">View Easy, Code Is on GitHub</a></div>
-		</div>
+		<?php include('footer.php'); ?>
 	</body>
 </html>
