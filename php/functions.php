@@ -8,13 +8,29 @@
 	 */
 	function getDatabaseConnection() {
 		try { // connect to database and return connections
+			//wh_log("In Get Database Connection" . PHP_EOL);
+			//wh_log("DB INfo is - Host: " . DB_HOST . ", Name: " . DB_NAME . " , User: " . DB_USER . ", Pass: " . DB_PASS . " right now" . PHP_EOL);
 			$conn = new PDO( 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS );
+			//wh_log("Connection is " . $conn . " right now" . PHP_EOL);
 			return $conn;
 		} catch ( PDOException $e ) { // connection to database failed, report error message
 			return $e->getMessage();
 		}
 	}
 
+	function wh_log($log_msg){
+		$log_filename = __DIR__."/log";
+		if (!file_exists($log_filename)) 
+		{
+			// create directory/folder uploads.
+			mkdir($log_filename, 0777, true);
+		}
+		$log_file_data = $log_filename.'/log_' . date('Y-m-d') . '.log';
+		$log_msg = rtrim($log_msg); //remove line endings
+		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
+		file_put_contents($log_file_data, date("Y-m-d H:i:s") . " -- [" . strtoupper(basename(__FILE__)) . "] : ". $log_msg . PHP_EOL, FILE_APPEND);
+	}
+	
 	/**
 	 * Update user
 	 *
@@ -98,8 +114,11 @@
 	 * @return array $userInfo
 	 */
 	function getUserWithEmailAddress( $email ) {
+		//wh_log("In get user with email address" . PHP_EOL);
+		//wh_log("Email is: " . $email . " right now." . PHP_EOL);
 		// get database connection
 		$databaseConnection = getDatabaseConnection();
+		//wh_log("Database connection is " . $databaseConnection . " right now." . PHP_EOL);
 
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
@@ -286,6 +305,25 @@
 		}
 	}
 
+	// Check to see if the currently-authenticated user's level is 1 - Provisioned
+	function isProvisioned() {
+		if ( isset( $_SESSION['user_info'] ) && $_SESSION['user_info'] && USER_LEVEL_PROVISIONED == $_SESSION['user_info']['user_level'] ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Check to see if the currently-authenticated user's level is 2 - Premium
+	function isPremium() {
+		if ( isset( $_SESSION['user_info'] ) && $_SESSION['user_info'] && USER_LEVEL_PREMIUM == $_SESSION['user_info']['user_level'] ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Check to see if the currently-authenticated user's level is 3 - Admin
 	function isAdmin() {
 		if ( isset( $_SESSION['user_info'] ) && $_SESSION['user_info'] && USER_LEVEL_ADMIN == $_SESSION['user_info']['user_level'] ) {
 			return true;
