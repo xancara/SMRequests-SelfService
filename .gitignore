@@ -3,3 +3,4 @@ robots.txt
 config_template.php
 log/
 php/log/
+*.log
