@@ -18,6 +18,32 @@
 		}
 	}
 
+	/**
+	 * Get SMR User DB connection 
+	 *
+	 * @param smrUser
+	 *
+	 * @return db connection
+	 */
+	function getSMRDatabaseConnection( $smrUser ) {
+		try { // connect to database and return connections
+			//wh_log("In Get Database Connection" . PHP_EOL);
+			//wh_log("DB INfo is - Host: " . DB_HOST . ", Name: " . DB_NAME . " , User: " . DB_USER . ", Pass: " . DB_PASS . " right now" . PHP_EOL);
+			$conn = new PDO( 'mysql:host=' . DB_HOST . ';dbname=' . DB_PREFIX . $smrUser , DB_USER, DB_PASS );
+			//wh_log("Connection is " . $conn . " right now" . PHP_EOL);
+			return $conn;
+		} catch ( PDOException $e ) { // connection to database failed, report error message
+			return $e->getMessage();
+		}
+	}
+
+	/**
+	 * Post message to Log
+	 *
+	 * @param message
+	 *
+	 * @return void
+	 */
 	function wh_log($log_msg){
 		$log_filename = __DIR__."/log";
 		if (!file_exists($log_filename)) 
