@@ -21,7 +21,7 @@
 	//MY VIEWERS PAGE SPECIFIC CODE START
 	//Defines for connecting to broadcaster local db - added to the config file that is located outside repo under capstone_includes
 
-	//connect to broadcasters database (adapted from request_list repo)
+	//connect to broadcasters database (adapted from request_list repo) 
 	$conn = mysqli_connect(dbhost, dbuser, dbpass, db);
 	if(! $conn ) {die('Could not connect: ' . mysqli_error($conn));}
 	$conn->set_charset("utf8mb4");
@@ -205,7 +205,8 @@
 									<th>name</th>
 									<th>dateadded</th>
 									<th>Status</th>
-									<th>Update Status</th>
+									<th>Toggle Whitelist</th>
+									<th>Toggle Ban</th>
 								</tr>
 								<?php foreach( $viewers as $viewer ) : ?>
 									<tr>
@@ -221,10 +222,10 @@
 										<td>default</td>	
 									<?php	}	?>
 										<td>
-											<select name="viewer_status">
-												<option value="0">Ban</option>
-												<option value="1">White List</option>
-											</select>
+											<a href="php/process_myviewers.php?cmd=togglewhitelist&viewer=Viewer1"><img src="assets\icons8-reservation-waitlist-78.png" /></a>
+										</td>
+										<td>
+											<a href="php/process_myviewers.php?cmd=toggleban&viewer=Viewer1"><img src="assets\icons8-remove-user-female-48.png" /></a>
 										</td>
 									</tr>
 								<?php endforeach; ?>
