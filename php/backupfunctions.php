@@ -8,68 +8,13 @@
 	 */
 	function getDatabaseConnection() {
 		try { // connect to database and return connections
-			//wh_log("In Get Database Connection" . PHP_EOL);
-			//wh_log("DB INfo is - Host: " . DB_HOST . ", Name: " . DB_NAME . " , User: " . DB_USER . ", Pass: " . DB_PASS . " right now" . PHP_EOL);
 			$conn = new PDO( 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS );
-			//wh_log("Connection is " . $conn . " right now" . PHP_EOL);
 			return $conn;
 		} catch ( PDOException $e ) { // connection to database failed, report error message
 			return $e->getMessage();
 		}
 	}
 
-	function wh_log($log_msg){
-		$log_filename = __DIR__."/log";
-		if (!file_exists($log_filename)) 
-		{
-			// create directory/folder uploads.
-			mkdir($log_filename, 0777, true);
-		}
-		$log_file_data = $log_filename.'/log_' . date('Y-m-d') . '.log';
-		$log_msg = rtrim($log_msg); //remove line endings
-		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
-		file_put_contents($log_file_data, date("Y-m-d H:i:s") . " -- [" . strtoupper(basename(__FILE__)) . "] : ". $log_msg . PHP_EOL, FILE_APPEND);
-	}
-	
-	/**
-	 * Get SMR User DB connection 
-	 *
-	 * @param smrUser
-	 *
-	 * @return db connection
-	 */
-	function getSMRDatabaseConnection( $smrUser ) {
-		try { // connect to database and return connections
-			//wh_log("In Get Database Connection" . PHP_EOL);
-			//wh_log("DB INfo is - Host: " . DB_HOST . ", Name: " . DB_NAME . " , User: " . DB_USER . ", Pass: " . DB_PASS . " right now" . PHP_EOL);
-			$conn = new PDO( 'mysql:host=' . DB_HOST . ';dbname=' . DB_PREFIX . $smrUser , DB_USER, DB_PASS );
-			//wh_log("Connection is " . $conn . " right now" . PHP_EOL);
-			return $conn;
-		} catch ( PDOException $e ) { // connection to database failed, report error message
-			return $e->getMessage();
-		}
-	}
-
-	/**
-	 * Post message to Log
-	 *
-	 * @param message
-	 *
-	 * @return void
-	 */
-	function wh_log($log_msg){
-		$log_filename = __DIR__."/log";
-		if (!file_exists($log_filename)) 
-		{
-			// create directory/folder uploads.
-			mkdir($log_filename, 0777, true);
-		}
-		$log_file_data = $log_filename.'/log_' . date('Y-m-d') . '.log';
-		$log_msg = rtrim($log_msg); //remove line endings
-		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
-		file_put_contents($log_file_data, date("Y-m-d H:i:s") . " -- [" . strtoupper(basename(__FILE__)) . "] : ". $log_msg . PHP_EOL, FILE_APPEND);
-	}
-	
 	/**
 	 * Update user
 	 *
@@ -114,46 +59,11 @@
 	/**
 	 * Get row from a table with a value
 	 *
-	 * @param string $smRuser	 
 	 * @param string $tableName
 	 * @param string $column
 	 * @param string $value
 	 *
-	 * @return array $data
-	 */
-	function getSMRRowWithValue( $smrUser, $tableName, $column, $value ) {
-		// get database connection
-		$databaseConnection = getSMRDatabaseConnection( $smrUser );
-
-		// create our sql statment
-		$statement = $databaseConnection->prepare( '
-			SELECT
-				*
-			FROM
-				' . $tableName . '
-			WHERE
-				' . $column . ' = :' . $column
-		);
-		//wh_log("Statement is " . json_encode($statement));
-		// execute sql with actual values
-		$statement->setFetchMode( PDO::FETCH_ASSOC );
-		$statement->execute( array(
-			$column => trim( $value )
-		) );
-
-		// get and return data
-		$data = $statement->fetch();
-		return $data;
-	}
-
-	/**
-	 * Get row from a table with a value
-	 *
-	 * @param string $tableName
-	 * @param string $column
-	 * @param string $value
-	 *
-	 * @return array $data
+	 * @return array $info
 	 */
 	function getRowWithValue( $tableName, $column, $value ) {
 		// get database connection
@@ -175,75 +85,9 @@
 			$column => trim( $value )
 		) );
 
-		// get and return data
-		$data = $statement->fetch();
-		return $data;
-	}
-	
-	/**
-	 * Get data from a table with limit and offset
-	 *
-	 * @param string $tableName
-	 * @param string $column
-	 * @param string $limit
-	 * @param string $offset
-	 *
-	 * @return array $data
-	 */
-	function getSMRdataWithLimit( $smrUser, $tableName, $limit, $offset ) {
-		// get database connection
-		$databaseConnection = getSMRDatabaseConnection( $smrUser );
-
-		// create our sql statment
-		$statement = $databaseConnection->prepare( '
-			SELECT
-				*
-			FROM
-				' . $tableName . '
-			LIMIT
-				' . $limit . '
-			OFFSET 
-				' . $offset
-		);
-		//wh_log("Statement is " . json_encode($statement));
-		// execute sql with actual values
-		$statement->setFetchMode( PDO::FETCH_ASSOC );
-		$statement->execute();
-
-		// get and return data
-		$data = $statement->fetchALL();
-		return $data;
-	}
-	
-	/**
-	 * Get data from a table with limit and offset
-	 *
-	 * @param string $tableName
-	 * @param string $column
-	 * @param string $limit
-	 * @param string $offset
-	 *
-	 * @return string $data
-	 */
-	function getSMRcountOnTable( $smrUser, $tableName ) {
-		// get database connection
-		$databaseConnection = getSMRDatabaseConnection( $smrUser );
-
-		// create our sql statment
-		$statement = $databaseConnection->prepare( '
-			SELECT
-				COUNT(*)
-			FROM
-				' . $tableName
-		);
-		//wh_log("Statement is " . json_encode($statement));
-		// execute sql with actual values
-		$statement->setFetchMode( PDO::FETCH_ASSOC );
-		$statement->execute();
-
-		// get and return data
-		$data = $statement->fetchColumn();
-		return $data;
+		// get and return user
+		$user = $statement->fetch();
+		return $user;
 	}
 
 	/**
@@ -254,11 +98,9 @@
 	 * @return array $userInfo
 	 */
 	function getUserWithEmailAddress( $email ) {
-		//wh_log("In get user with email address" . PHP_EOL);
-		//wh_log("Email is: " . $email . " right now." . PHP_EOL);
 		// get database connection
 		$databaseConnection = getDatabaseConnection();
-		//wh_log("Database connection is " . $databaseConnection . " right now." . PHP_EOL);
+		var_dump($databaseConnection);
 
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
