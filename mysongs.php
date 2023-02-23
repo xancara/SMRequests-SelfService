@@ -20,7 +20,6 @@ if (!empty($_SESSION['user_info']['fb_access_token'])) { // get users facebook i
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
 	<!-- title of our page -->
 	<title>SMRequests Development | My Songs</title>

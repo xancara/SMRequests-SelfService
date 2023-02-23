@@ -13,7 +13,7 @@
 	define( 'FB_APP_STATE', 'eciphp' ); // verify state
 
 	// include config (creds and things we keep out of www and repo)
-	include_once __DIR__ . ( PHP_OS == 'Linux' ? '' : '/' ) . '../../capstone_includes/config.php';
+	include_once __DIR__ . ( PHP_OS == 'Windows' ? '' : '/' ) . '../../capstone_includes/config.php';
 
 	// include global functions
 	include_once __DIR__  . '/php/functions.php';
