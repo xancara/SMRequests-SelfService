@@ -160,7 +160,7 @@
 										<option value="NightBot">NightBot</option>
 										<option value="Lumia">Lumia</option>
 										<option value="Other">Other</option>
-									</select>
+									</select></div>
 							</div>
 							<div>
 								<div class="section-label" title="The system validates requests coming from your chat-bot. Your chat bot will have to include it to pass validation.">Security Key (Hover for Info)</div>

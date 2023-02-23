@@ -162,7 +162,7 @@
 								<div><select class="form-input" form="setupsmr_form" name="scoreType">
 										<option value="ITG">ITG</option>
 										<option value="DDR">DDR</option>
-									</select>
+									</select></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
