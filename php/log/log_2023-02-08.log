@@ -1,0 +1,26 @@
+2023-02-08 03:57:08 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 03:57:08 -- [FUNCTIONS.PHP] : Email is: admin@admin.com right now.
+2023-02-08 03:57:08 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 03:57:08 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now
+2023-02-08 03:57:08 -- [FUNCTIONS.PHP] : Database connection is SQLSTATE[HY000] [1045] Access denied for user 'para'@'localhost' (using password: YES) right now.
+2023-02-08 03:59:16 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 03:59:16 -- [FUNCTIONS.PHP] : Email is: admin@admin.com right now.
+2023-02-08 03:59:16 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 03:59:16 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now
+2023-02-08 03:59:16 -- [FUNCTIONS.PHP] : Database connection is SQLSTATE[HY000] [1045] Access denied for user 'para'@'localhost' (using password: YES) right now.
+2023-02-08 03:59:58 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 03:59:58 -- [FUNCTIONS.PHP] : Email is: admin@admin.com right now.
+2023-02-08 03:59:58 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 03:59:58 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now
+2023-02-08 04:02:08 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 04:02:08 -- [FUNCTIONS.PHP] : Email is: admin@admin.com right now.
+2023-02-08 04:02:08 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 04:02:08 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now
+2023-02-08 04:02:48 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 04:02:48 -- [FUNCTIONS.PHP] : Email is: donor@donor.com right now.
+2023-02-08 04:02:48 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 04:02:48 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now
+2023-02-08 04:03:38 -- [FUNCTIONS.PHP] : In get user with email address
+2023-02-08 04:03:38 -- [FUNCTIONS.PHP] : Email is: admin@admin.com right now.
+2023-02-08 04:03:38 -- [FUNCTIONS.PHP] : In Get Database Connection
+2023-02-08 04:03:38 -- [FUNCTIONS.PHP] : DB INfo is - Host: localhost, Name: smrequ5_login , User: para, Pass: S3r3nity right now

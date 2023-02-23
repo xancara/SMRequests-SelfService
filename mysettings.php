@@ -1,10 +1,9 @@
 <?php
 /*
-* Module Name: 	Myaccount.php
-* Date: 		[DATE]
-* Author:		[AUTHOR]
-*				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
-* Purpose:		Enables user to view and interact with their user account details.
+* Module Name: 	Mysettings.php
+* Date: 		2/23/2023
+* Author:		J. Sayre		
+* Purpose:		Enables user to view and interact with their request system settings. This form is very similar to setupsmr.php, except it pulls in a user's existing
 */
 
 	// Load global resources and establish a session
@@ -23,7 +22,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
+		<title>SMRequests Development | My Settings</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -46,21 +45,13 @@
 				// initialize our loader overlay
 				loader.initialize();
 
-				$( '#change_password' ).on( 'click', function() { // onclick for our change password check box
-					if ( $( '#change_password_section' ).is( ':visible' ) ) { // if visible, hide it
-						$( '#change_password_section' ).hide();
-					} else { // if hidden, show it
-						$( '#change_password_section' ).show();
-					}
-				} );
-
 				$( '#update_button' ).on( 'click', function() { // onclick for our update button
-					processMyAccount();
+					processMySettings();
 				} );
 
 				$( '.form-input' ).keyup( function( e ) {
 					if ( e.keyCode == 13 ) { // our enter key
-						processMyAccount();
+						processMySettings();
 					}
 				} );
 
@@ -98,15 +89,15 @@
 				} );
 			} );
 
-			function processMyAccount() {
+			function processMySettings() {
 				// clear error message
 				$( '#error_message' ).html( '' );
 
 				loader.showLoader();
 
 				$.ajax( {
-					url: 'php/process_myaccount.php',
-					data: $( '#myaccount_form' ).serialize(),
+					url: 'php/process_mysettings.php',
+					data: $( '#mysettings_form' ).serialize(),
 					type: 'post',
 					dataType: 'json',
 					success: function( data ) {
@@ -133,37 +124,49 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">My Account</div>
-						<form id="myaccount_form" name="myaccount_form">
-							<div id="error_message" class="error-message">
+						<div class="section-heading">My Settings</div>
+						<form id="mysettings_form" name="mysettings_form">
+						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
+							<div id="error_message" class="error-message"></div>
+							<div>
+								<div class="section-label" title="">Twitch Channel Name</div>
+								<div><input class="form-input" type="text" name="twitch_channel" value="<?php echo $_SESSION['user_info']['twitch_channel']; ?>" /></div>
 							</div>
 							<div>
-								<div class="section-label">Email</div>
-								<div><input class="form-input" type="text" name="email" value="<?php echo $_SESSION['user_info']['email']; ?>" /></div>
+								<div class="section-label" title="">Stepmania Profile Name</div>
+								<div><input class="form-input" type="text" name="sm_profile" value="<?php echo $_SESSION['user_info']['sm_profile']; ?>" /></div>
 							</div>
 							<div class="section-mid-container">
-								<div class="section-label">First Name</div>
-								<div><input class="form-input" type="text" name="first_name" value="<?php echo $_SESSION['user_info']['first_name']; ?>" /></div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">Last Name</div>
-								<div><input class="form-input" type="text" name="last_name" value="<?php echo $_SESSION['user_info']['last_name']; ?>"/></div>
+								<div class="section-label">Chatbot</div>
+								<div><select class="form-input" form="setupsmr_form" name="chatbot">
+										<option value="StreamElements">StreamElements</option>
+										<option value="NightBot">NightBot</option>
+										<option value="Lumia">Lumia</option>
+										<option value="Other">Other</option>
+									</select>
 							</div>
 							<div>
-								<div class="section-label">
-									<input type="checkbox" name="change_password" id="change_password" style="width:10px"/>
-									<label for="change_password">Change Passowrd</label>
-								</div>
+								<div class="section-label" title="The system validates requests coming from your chat-bot. Your chat bot will have to include it to pass validation.">Security Key (Hover for Info)</div>
+								<div><input class="form-input" type="text" name="security_key" value="<?php echo $_SESSION['user_info']['security_key']; ?>" /></div>
 							</div>
-							<div id="change_password_section" style="display:none">
-								<div class="section-mid-container">
-									<div class="section-label">Password</div>
-									<div><input class="form-input" type="password" name="password" /></div>
-								</div>
-								<div class="section-mid-container">
-									<div class="section-label">Confirm Password</div>
-									<div><input class="form-input" type="password" name="confirm_password" /></div>
-								</div>
+							<div class="section-mid-container">
+								<div class="section-label">Maximum Requests (no more than 10)</div>
+								<div><input class="form-input" type="text" name="maxRequests" value="<?php echo $_SESSION['user_info']['maxRequests']; ?>" /></div>
+							</div>
+							<div class="section-mid-container">
+								<div class="section-label" title="Determines how long a chatter needs to wait before requesitng again. (# of current requests * this value) = minutes between cooldowns.">Cooldown Interval (Hover for Info)</div>
+								<div><input class="form-input" type="text" name="cooldownMultiplier" value="<?php echo $_SESSION['user_info']['cooldownMultiplier']; ?>"/></div>
+							</div>
+							<div class="section-mid-container">
+								<div class="section-label">Scoring Type</div>
+								<div><select class="form-input" form="setupsmr_form" name="scoreType">
+										<option value="ITG">ITG</option>
+										<option value="DDR">DDR</option>
+									</select>
+							</div>
+							<div class="section-mid-container">
+								<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
+								<div><input class="form-input" type="text" name="topPercent" value="<?php echo $_SESSION['user_info']['topPercent']; ?>" /></div>
 							</div>
 						</form>
 						<div class="section-action-container">
@@ -179,102 +182,7 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">Connected Facebook Account</div>
-						<?php if ( empty( $fbUserInfo ) || $fbUserInfo['has_errors'] ) : // could not get facebook user info ?>
-							<div class="a-fb">
-								<div class="fb-button-container">
-									<div>Login With Facebook to Connect Facebook Account</div>
-								</div>
-							</div>
-						<?php else : // display facebook user info ?> 
-							<div>
-								<div class="pro-img-cont">
-									<img class="pro-img" src="<?php echo $fbUserInfo['fb_response']['picture']['data']['url']; ?>" />
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Email
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['email']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									First Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['first_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Last Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['last_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Facebook Application
-								</div>
-								<div>
-									<?php echo $fbDebugTokenInfo['fb_response']['data']['application']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Issued
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['issued_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Expires
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['expires_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Scope
-								</div>
-								<div>
-									<?php echo implode( ',', $fbDebugTokenInfo['fb_response']['data']['scopes'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_info">
-										show
-									</div>
-									<div id="fb_user_info" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbUserInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Debug Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_access_token_debug">
-										show
-									</div>
-									<div id="fb_user_access_token_debug" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbDebugTokenInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-						<?php endif; ?>
+						<?php /* Possible settings page content here */ ?>
 					</div>
 				</div>
 			</div>
@@ -282,5 +190,6 @@
 		<br />
 		<br />
 		<br />
+		<?php include('footer.php'); ?>
 	</body>
 </html>

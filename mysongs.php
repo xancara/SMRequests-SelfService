@@ -6,274 +6,190 @@
 * Purpose:		Enables user to view and interact with their user song library.
 */
 
-	// Load global resources and establish a session
-	include_once 'autoloader.php';
+// Load global resources and establish a session
+include_once 'autoloader.php';
 
-	if ( !isLoggedIn() ) { // Redirect users that aren't logged-in
-		header( 'location: index.php' );
-	}
+if (!isLoggedIn()) { // Redirect users that aren't logged-in
+	header('location: index.php');
+}
 
-	if ( !empty( $_SESSION['user_info']['fb_access_token'] ) ) { // get users facebook info is we have an access token
-		$fbUserInfo = getFacebookUserInfo( $_SESSION['user_info']['fb_access_token'] );
-		$fbDebugTokenInfo = getDebugAccessTokenInfo( $_SESSION['user_info']['fb_access_token'] );
-	}
+if (!empty($_SESSION['user_info']['fb_access_token'])) { // get users facebook info is we have an access token
+	$fbUserInfo = getFacebookUserInfo($_SESSION['user_info']['fb_access_token']);
+	$fbDebugTokenInfo = getDebugAccessTokenInfo($_SESSION['user_info']['fb_access_token']);
+}
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
 
-		<!-- include fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+<head>
+	<!-- title of our page -->
+	<title>SMRequests Development | My Songs</title>
 
-		<!-- mobile layout support -->
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<!-- include fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
-		<!-- css styles for our my account page-->
-		<link href="css/global.css" rel="stylesheet" type="text/css">
-		<link href="css/myaccount.css" rel="stylesheet" type="text/css">
+	<!-- mobile layout support -->
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-		<!-- jquery -->
-		<script type="text/javascript" src="js/jquery.js"></script>
+	<!-- css styles for our my account page-->
+	<link href="css/global.css" rel="stylesheet" type="text/css">
+	<link href="css/myaccount.css" rel="stylesheet" type="text/css">
 
-		<!-- include our loader overlay script -->
-		<script type="text/javascript" src="js/loader.js"></script>
+	<!-- jquery -->
+	<script type="text/javascript" src="js/jquery.js"></script>
 
-		<script>
-			$( function() { // once the document is ready, do things
-				// initialize our loader overlay
-				loader.initialize();
+	<!-- include our loader overlay script -->
+	<script type="text/javascript" src="js/loader.js"></script>
 
-				$( '#change_password' ).on( 'click', function() { // onclick for our change password check box
-					if ( $( '#change_password_section' ).is( ':visible' ) ) { // if visible, hide it
-						$( '#change_password_section' ).hide();
-					} else { // if hidden, show it
-						$( '#change_password_section' ).show();
-					}
-				} );
+	<script>
+		$(function() { // once the document is ready, do things
+			// initialize our loader overlay
+			loader.initialize();
 
-				$( '#update_button' ).on( 'click', function() { // onclick for our update button
-					processMyAccount();
-				} );
+			$( '#logout_link' ).on( 'click', function() { // on click for our logout link
+                    // show our loading overlay
+                    loader.showLoader();
 
-				$( '.form-input' ).keyup( function( e ) {
-					if ( e.keyCode == 13 ) { // our enter key
-						processMyAccount();
-					}
-				} );
+                    // server side logout
+                    $.ajax( {
+                        url: 'php/process_logout.php',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function( data ) {
+                            loader.hideLoader();
+                            window.location.href = "index.php";
+                        }
+                    } );
+                } );
 
-				$( '.a-fb' ).on( 'click', function() { // on click for logout
-					loader.showLoader();
+			$('#update_button').on('click', function() { // onclick for our update button
+				processMySongs();
+			});
 
-					$.ajax( { 
-						url: 'php/process_logout.php',
-						type: 'post',
-						dataType: 'json',
-						success: function( data ) {
-							loader.hideLoader();
-							window.location.href = 'index.php';
-						}
-					} );
-				} );
+			$('.form-input').keyup(function(e) {
+				if (e.keyCode == 13) { // our enter key
+					processMySongs();
+				}
+			});
 
-				$( '.show-hide' ).on( 'click', function() { // on click for show hide section
-					// get section we are showing/hiding
-					var showHideSection = $( this ).data( 'section' );
-
-					if ( $( '#' + showHideSection ).is( ':visible' ) ) { // section is currently visible
-						// change text to show
-						$( this ).html( 'show' );
-
-						// hide section
-						$( '#' + showHideSection ).hide();
-					} else { // section is currently hidden
-						// changet text to hide
-						$( this ).html( 'hide' );
-
-						// show section
-						$( '#' + showHideSection ).show();
-					}
-				} );
-			} );
-
-			function processMyAccount() {
-				// clear error message
-				$( '#error_message' ).html( '' );
-
+			$('.a-fb').on('click', function() { // on click for logout
 				loader.showLoader();
 
-				$.ajax( {
-					url: 'php/process_myaccount.php',
-					data: $( '#myaccount_form' ).serialize(),
+				$.ajax({
+					url: 'php/process_logout.php',
 					type: 'post',
 					dataType: 'json',
-					success: function( data ) {
-						if ( 'ok' == data.status ) {
-							window.location.reload();
-						} else if ( 'fail' == data.status ) {
-							$( '#error_message' ).html( data.message );
-							loader.hideLoader();
-						}
+					success: function(data) {
+						loader.hideLoader();
+						window.location.href = 'index.php';
 					}
-				} );
-			}
-		</script>
-	</head>
-	<body>
-		<div class="site-header">
-			<div class="site-header-pad">
-				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
-				</a>
-			</div>
+				});
+			});
+
+			$('.show-hide').on('click', function() { // on click for show hide section
+				// get section we are showing/hiding
+				var showHideSection = $(this).data('section');
+
+				if ($('#' + showHideSection).is(':visible')) { // section is currently visible
+					// change text to show
+					$(this).html('show');
+
+					// hide section
+					$('#' + showHideSection).hide();
+				} else { // section is currently hidden
+					// changet text to hide
+					$(this).html('hide');
+
+					// show section
+					$('#' + showHideSection).show();
+				}
+			});
+		});
+
+		function processMySongs() {
+			// clear error message
+			$('#error_message').html('');
+
+			loader.showLoader();
+
+			$.ajax({
+				url: 'php/process_mysongs.php',
+				data: $('#mysongs_form').serialize(),
+				type: 'post',
+				dataType: 'json',
+				success: function(data) {
+					if ('ok' == data.status) {
+						window.location.reload();
+					} else if ('fail' == data.status) {
+						$('#error_message').html(data.message);
+						loader.hideLoader();
+					}
+				}
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<div class="site-header">
+		<div class="site-header-pad">
+			<a class="header-home-link" href="index.php">
+				SMRequests.Dev
+			</a>
 		</div>
-		<div class="site-content-container">
-			<div class="site-content-centered">
-				<div class="site-content-section">
-					<div class="site-content-section-inner">
-						<div class="section-heading">My Account</div>
-						<form id="myaccount_form" name="myaccount_form">
-							<div id="error_message" class="error-message">
+	</div>
+	<div class="site-content-container">
+		<div class="site-content-centered">
+			<div class="site-content-section">
+				<div class="site-content-section-inner">
+					<div class="section-heading">My Songs</div>
+					<form id="mysongs_form" name="mysongs_form">
+						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
+						<div id="error_message" class="error-message">
+						</div>
+						<div>
+							<div class="section-label">Email</div>
+							<div><input class="form-input" type="text" name="email" value="<?php echo $_SESSION['user_info']['email']; ?>" /></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label">First Name</div>
+							<div><input class="form-input" type="text" name="first_name" value="<?php echo $_SESSION['user_info']['first_name']; ?>" /></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label">Last Name</div>
+							<div><input class="form-input" type="text" name="last_name" value="<?php echo $_SESSION['user_info']['last_name']; ?>" /></div>
+						</div>
+						<div>
+							<div class="section-label">
+								<input type="checkbox" name="change_password" id="change_password" style="width:10px" />
+								<label for="change_password">Change Passowrd</label>
 							</div>
-							<div>
-								<div class="section-label">Email</div>
-								<div><input class="form-input" type="text" name="email" value="<?php echo $_SESSION['user_info']['email']; ?>" /></div>
+						</div>
+						<div id="change_password_section" style="display:none">
+							<div class="section-mid-container">
+								<div class="section-label">Password</div>
+								<div><input class="form-input" type="password" name="password" /></div>
 							</div>
 							<div class="section-mid-container">
-								<div class="section-label">First Name</div>
-								<div><input class="form-input" type="text" name="first_name" value="<?php echo $_SESSION['user_info']['first_name']; ?>" /></div>
+								<div class="section-label">Confirm Password</div>
+								<div><input class="form-input" type="password" name="confirm_password" /></div>
 							</div>
-							<div class="section-mid-container">
-								<div class="section-label">Last Name</div>
-								<div><input class="form-input" type="text" name="last_name" value="<?php echo $_SESSION['user_info']['last_name']; ?>"/></div>
-							</div>
-							<div>
-								<div class="section-label">
-									<input type="checkbox" name="change_password" id="change_password" style="width:10px"/>
-									<label for="change_password">Change Passowrd</label>
-								</div>
-							</div>
-							<div id="change_password_section" style="display:none">
-								<div class="section-mid-container">
-									<div class="section-label">Password</div>
-									<div><input class="form-input" type="password" name="password" /></div>
-								</div>
-								<div class="section-mid-container">
-									<div class="section-label">Confirm Password</div>
-									<div><input class="form-input" type="password" name="confirm_password" /></div>
-								</div>
-							</div>
-						</form>
-						<div class="section-action-container">
-							<div class="section-button-container" id="update_button">
-								<div>Update</div>
-							</div>
+						</div>
+					</form>
+					<div class="section-action-container">
+						<div class="section-button-container" id="update_button">
+							<div>Update</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="site-content-container" style="display:none;">
+	</div>
+	<div class="site-content-container" style="display:none;">
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">Connected Facebook Account</div>
-						<?php if ( empty( $fbUserInfo ) || $fbUserInfo['has_errors'] ) : // could not get facebook user info ?>
-							<div class="a-fb">
-								<div class="fb-button-container">
-									<div>Login With Facebook to Connect Facebook Account</div>
-								</div>
-							</div>
-						<?php else : // display facebook user info ?> 
-							<div>
-								<div class="pro-img-cont">
-									<img class="pro-img" src="<?php echo $fbUserInfo['fb_response']['picture']['data']['url']; ?>" />
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Email
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['email']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									First Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['first_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									Last Name
-								</div>
-								<div>
-									<?php echo $fbUserInfo['fb_response']['last_name']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Facebook Application
-								</div>
-								<div>
-									<?php echo $fbDebugTokenInfo['fb_response']['data']['application']; ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Issued
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['issued_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Expires
-								</div>
-								<div>
-									<?php echo date( 'm-d-Y h:i:s', $fbDebugTokenInfo['fb_response']['data']['expires_at'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Scope
-								</div>
-								<div>
-									<?php echo implode( ',', $fbDebugTokenInfo['fb_response']['data']['scopes'] ); ?>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_info">
-										show
-									</div>
-									<div id="fb_user_info" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbUserInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">
-									User Access Token Debug Info Raw FB Response
-								</div>
-								<div>
-									<div class="a-default show-hide" data-section="fb_user_access_token_debug">
-										show
-									</div>
-									<div id="fb_user_access_token_debug" class="show-hide-section">
-										<textarea class="show-hide-textarea"><?php print_r( $fbDebugTokenInfo['fb_response'] ); ?></textarea>
-									</div>
-								</div>
-							</div>
-						<?php endif; ?>
+					<?php /* Possible viewers page content here */ ?>
 					</div>
 				</div>
 			</div>
@@ -281,5 +197,6 @@
 		<br />
 		<br />
 		<br />
+		<?php include('footer.php'); ?>
 	</body>
 </html>

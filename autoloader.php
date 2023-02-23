@@ -3,6 +3,8 @@
 	session_start();
 
 	// site global defines
+	define( 'USER_LEVEL_PROVISIONED', '1' );
+	define( 'USER_LEVEL_PREMIUM', '2' );
 	define( 'USER_LEVEL_ADMIN', '3' );
 
 	// fb defines
@@ -11,7 +13,7 @@
 	define( 'FB_APP_STATE', 'eciphp' ); // verify state
 
 	// include config (creds and things we keep out of www and repo)
-	include_once __DIR__ . ( PHP_OS == 'Linux' ? '' : '/' ) . '../../capstone_includes/config.php';
+	include_once __DIR__ . ( PHP_OS == 'Windows' ? '' : '/' ) . '../../capstone_includes/config.php';
 
 	// include global functions
 	include_once __DIR__  . '/php/functions.php';

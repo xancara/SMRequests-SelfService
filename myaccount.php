@@ -54,6 +54,22 @@
 					}
 				} );
 
+				$( '#logout_link' ).on( 'click', function() { // on click for our logout link
+                    // show our loading overlay
+                    loader.showLoader();
+
+                    // server side logout
+                    $.ajax( {
+                        url: 'php/process_logout.php',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function( data ) {
+                            loader.hideLoader();
+                            window.location.href = "index.php";
+                        }
+                    } );
+                } );
+
 				$( '#update_button' ).on( 'click', function() { // onclick for our update button
 					processMyAccount();
 				} );
@@ -282,5 +298,6 @@
 		<br />
 		<br />
 		<br />
+		<?php include('footer.php'); ?>
 	</body>
 </html>

@@ -38,13 +38,21 @@
 				// initialize our loader overlay
 				loader.initialize();
 
-				$( '#change_password' ).on( 'click', function() { // onclick for our change password check box
-					if ( $( '#change_password_section' ).is( ':visible' ) ) { // if visible, hide it
-						$( '#change_password_section' ).hide();
-					} else { // if hidden, show it
-						$( '#change_password_section' ).show();
-					}
-				} );
+				$( '#logout_link' ).on( 'click', function() { // on click for our logout link
+                    // show our loading overlay
+                    loader.showLoader();
+
+                    // server side logout
+                    $.ajax( {
+                        url: 'php/process_logout.php',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function( data ) {
+                            loader.hideLoader();
+                            window.location.href = "index.php";
+                        }
+                    } );
+                } );
 
 				$( '#update_button' ).on( 'click', function() { // onclick for our update button
 					processMyAccount();
@@ -274,5 +282,6 @@
 		<br />
 		<br />
 		<br />
+		<?php include('footer.php'); ?>
 	</body>
 </html>
