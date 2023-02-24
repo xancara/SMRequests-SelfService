@@ -1,40 +1,60 @@
 <?php
-	/* NEEDS TO BE UPDATED FOR VIEWERS; THIS IS JUST A COPY OF PROCESS_MYACCOUNT.PHP */
 
 	// load up global things
 	include_once '../autoloader.php';
 
-	// get user info with key and get user info with email address
-	$userInfo = getRowWithValue( 'users', 'key_value', $_SESSION['user_info']['key_value'] );
-	$userInfoWithEmail = getUserWithEmailAddress( trim( $_POST['email'] ) );
+	// get viewer info of smrUser from sm_requestors table using id field
+	$viewerInfo = getSMRRowWithValue( 'xancara', SMR_PREFIX . 'requestors', 'id', trim( $_GET['id'] ) );
+	//var_dump($viewerInfo);
 
-	if ( !filter_var( trim( $_POST['email'] ), FILTER_VALIDATE_EMAIL ) ) { // check email address
-		$status = 'fail';
-		$message = 'Invalid Email';
-	} elseif ( !empty( $userInfoWithEmail ) && $_POST['email'] != $userInfo['email'] ) { // make sure if they are trying to change their email it is not already taken
-		$status = 'fail';
-		$message = 'Invalid Email';
-	} elseif ( !$_POST['first_name'] || !$_POST['last_name'] ) { // check name
-		$status = 'fail';
-		$message = 'Invalid first or last name';
-	} elseif ( isset( $_POST['change_password'] ) && ( !$_POST['password'] || $_POST['password'] != $_POST['confirm_password'] || strlen( $_POST['password'] ) < 8 ) ) { // check password/confirm password
-		$status = 'fail';
-		$message = 'Invalid password or passwords do not match and must be at least 8 characters';
-	} else { // all good!
-		$status = 'ok';
-		$message = 'valid';
+	// get toggleban or togglewhitelist command from url
+	$cmd = trim( $_GET['cmd'] );
+	//var_dump($cmd);
 
-		// add to post so we can pass along the key value of the user
-		$_POST['key_value'] = $userInfo['key_value'];
+	if ($cmd == 'toggleban') {
+		if ( $viewerInfo['whitelisted'] === 'true') { // prevent ban of a whitelisted viewer
+			$status = 'fail';
+			$message = 'Cannot ban a whitelisted viewer';
+		} elseif ( $viewerInfo['banned'] === 'true' ) { // if viewer is banned, unban them
+			updateSMRRow( 'xancara', SMR_PREFIX . 'requestors', 'banned', false, $viewerInfo['id']);
+			$status = 'ok';
+			$message = 'valid';
+			$viewerInfo = getSMRRowWithValue( 'xancara', SMR_PREFIX . 'requestors', 'id', trim( $_GET['id'] ) );
+		} elseif ( $viewerInfo['banned'] === 'false' ) {
+			updateSMRRow( 'xancara', SMR_PREFIX . 'requestors', 'banned', true, $viewerInfo['id']);
+			$status = 'ok';
+			$message = 'valid';
+			$viewerInfo = getSMRRowWithValue( 'xancara', SMR_PREFIX . 'requestors', 'id', trim( $_GET['id'] ) );
+		} else {
+			$status = 'fail';
+			$message = 'Unknown error';
+		}
+		//var_dump($viewerInfo);
+	}
 
-		// update the users info
-		updateUserInfo( $_POST );
+	elseif ($cmd == 'togglewhitelist') {
+		if ( $viewerInfo['banned'] === 'true') { // prevent whitelist of a banned viewer
+			$status = 'fail';
+			$message = 'Cannot whitelist a banned viewer';
+		} elseif ( $viewerInfo['whitelisted'] === 'true' ) { // if viewer is whitelisted, unwhitelist them
+			updateSMRRow( 'xancara', SMR_PREFIX . 'requestors', 'whitelisted', false, $viewerInfo['id']);
+			$status = 'ok';
+			$message = 'valid';
+			$viewerInfo = getSMRRowWithValue( 'xancara', SMR_PREFIX . 'requestors', 'id', trim( $_GET['id'] ) );
+		} elseif ( $viewerInfo['whitelisted'] === 'false' ) {
+			updateSMRRow( 'xancara', SMR_PREFIX . 'requestors', 'whitelisted', true, $viewerInfo['id']);
+			$status = 'ok';
+			$message = 'valid';
+			$viewerInfo = getSMRRowWithValue( 'xancara', SMR_PREFIX . 'requestors', 'id', trim( $_GET['id'] ) );
+		} else {
+			$status = 'fail';
+			$message = 'Unknown error';
+		}
+		//var_dump($viewerInfo);
+	}
 
-		// get the user info so we have most recent info
-		$userInfo = getRowWithValue( 'users', 'key_value', $_SESSION['user_info']['key_value'] );
-
-		// update session with most recently updated user info
-		$_SESSION['user_info'] = $userInfo;
+	if ($status == 'ok') {
+		header( 'location: ../myviewers.php' ); // redirect to myviewers.php
 	}
 
 	echo json_encode( // return json for ajax on front end

@@ -22,16 +22,34 @@
 	//Defines for connecting to broadcaster local db - added to the config file that is located outside repo under capstone_includes
 
 	//connect to broadcasters database (adapted from request_list repo) 
-	$conn = mysqli_connect(dbhost, dbuser, dbpass, db);
-	if(! $conn ) {die('Could not connect: ' . mysqli_error($conn));}
-	$conn->set_charset("utf8mb4");
+	//$conn = mysqli_connect(dbhost, dbuser, dbpass, db);
+	//if(! $conn ) {die('Could not connect: ' . mysqli_error($conn));}
+	//$conn->set_charset("utf8mb4");
 
 	//query sm_requestors table to select all viewer records
-	$query = "SELECT * FROM sm_requestors";
-	$result = mysqli_query($conn, $query);
+	//$query = "SELECT * FROM sm_requestors";
+	//$result = mysqli_query($conn, $query);
 	//save query results to $viewers associative array
-	$viewers = mysqli_fetch_all ($result, MYSQLI_ASSOC);
+	//$viewers = mysqli_fetch_all ($result, MYSQLI_ASSOC);
 	//echo json_encode($viewers);
+
+	// Deal with Paging
+	if(!isset($_GET['page'])) {
+		$page = 1;
+	} else {
+		$page = $_GET['page'];
+	}
+	
+	// Determine offset and limit
+	$limit = 50;
+	$offset = ($page-1) * $limit;
+	
+	$total_pages = ceil(getSMRcountOnTable( 'xancara', SMR_PREFIX . 'requestors')/$limit);
+	//wh_log('Total Pages is ' . json_encode($total_pages));
+
+	// Get data from user DB for the viewers list
+	$viewers = getSMRdataWithLimit( 'xancara', SMR_PREFIX . 'requestors', $limit, $offset );
+	//wh_log('Viewers data array is ' . json_encode($viewers));
 ?>
 <!DOCTYPE html>
 <html>
@@ -213,8 +231,7 @@
 									<th>name</th>
 									<th>dateadded</th>
 									<th>Status</th>
-									<th>Toggle Whitelist</th>
-									<th>Toggle Ban</th>
+									<th>Update Status</th>
 								</tr>
 								<?php foreach( $viewers as $viewer ) : ?>
 									<tr>
@@ -230,15 +247,24 @@
 										<td>default</td>	
 									<?php	}	?>
 										<td>
-											<a href="php/process_myviewers.php?cmd=togglewhitelist&viewer=Viewer1"><img src="assets\icons8-reservation-waitlist-78.png" /></a>
-										</td>
-										<td>
-											<a href="php/process_myviewers.php?cmd=toggleban&viewer=Viewer1"><img src="assets\icons8-remove-user-female-48.png" /></a>
+											<?php
+											echo "<a href=\"php/process_myviewers.php?cmd=toggleban&id=".$viewer['id']."\">Ban</a>";
+											echo "&nbsp; &nbsp;";
+											echo "<a href=\"php/process_myviewers.php?cmd=togglewhitelist&id=".$viewer['id']."\">Whitelist</a>";
+											?>
 										</td>
 									</tr>
 								<?php endforeach; ?>
 							</table>
 						</form>
+						<div id="pagination">
+							<?php for($page=1; $page <= $total_pages ; $page++) :?>
+
+								<a href='<?php echo "?page=$page"; ?>' class="links"><?php  echo $page; ?>
+								 </a>
+
+							<?php endfor; ?>
+						</div>
 						<div class="section-action-container">
 							<div class="section-button-container" id="update_button">
 								<div>Update</div>

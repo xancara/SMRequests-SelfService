@@ -269,6 +269,40 @@
 	}
 
 	/**
+	 * Update an SMR colum with a value in a table by id
+	 * @param string $smrUser
+	 * @param string $tableName
+	 * @param string $column
+	 * @param string $value
+	 * @param string $id
+	 *
+	 * @return void
+	 */
+	function updateSMRRow( $smrUser, $tableName, $column, $value, $id ) {
+		// get database connection
+		$databaseConnection = getSMRDatabaseConnection($smrUser);
+
+		// create our sql statment
+		$statement = $databaseConnection->prepare( '
+			UPDATE
+				' . $tableName . '
+			SET
+				' . $column . ' = :value
+			WHERE
+				id = :id
+		' );
+
+		// set our parameters to use with the statment
+		$params = array(
+			'value' => trim( $value ),
+			'id' => trim( $id )
+		);
+
+		// run the query
+		$statement->execute( $params );
+	}
+
+	/**
 	 * Update a colum with a value in a table by id
 	 *
 	 * @param string $tableName
