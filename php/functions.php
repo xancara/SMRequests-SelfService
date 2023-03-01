@@ -205,10 +205,9 @@
 	/**
 	 * Get data from a table with limit and offset
 	 *
+	 * @param string $smrUser
 	 * @param string $tableName
-	 * @param string $column
-	 * @param string $limit
-	 * @param string $offset
+
 	 *
 	 * @return string $data
 	 */
