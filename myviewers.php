@@ -192,11 +192,13 @@
 								</div>
 							</div>
 						</form>
+						<!--
 						<div class="section-action-container">
 							<div class="section-button-container" id="update_button">
 								<div>Update</div>
 							</div>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>
@@ -210,20 +212,21 @@
 						<!-- - Sean Dixon - form to take in user input to indicate banned or whitelisted status -->
 						<form id="myviewers_form" name="myviewers_form">
 							<table>
-								<tr>
-									<th>id</th>
-									<th>twitchid</th>
+								<tr style="text-align:center;">
+									<th style="display:none;">id</th>
+									<th style="display:none;">twitchid</th>
 									<th>name</th>
 									<th>dateadded</th>
 									<th>banned</th>
 									<th>whitelisted</th>
 									<th>Status</th>
-									<th>Update Status</th>
+									<th>Toggle Ban</th>
+									<th>Toggle Whitelist</th>
 								</tr>
 								<?php foreach( $viewers as $viewer ) : ?>
-									<tr>
-										<td><?php echo $viewer['id']; ?></td>
-										<td><?php echo $viewer['twitchid']; ?></td>
+									<tr style="text-align:center;">
+										<td style="display:none;"><?php echo $viewer['id']; ?></td>
+										<td style="display:none;"><?php echo $viewer['twitchid']; ?></td>
 										<td><?php echo $viewer['name']; ?></td>
 										<td><?php echo $viewer['dateadded']; ?></td>
 										<td><?php echo $viewer['banned']; ?></td>
@@ -238,7 +241,7 @@
 										<td>
 											<?php
 											echo "<a href=\"php/process_myviewers.php?cmd=toggleban&id=".$viewer['id']."&st=".$viewer['banned']."\">Ban</a>";
-											echo "&nbsp; &nbsp;";
+											echo "</td><td>";
 											echo "<a href=\"php/process_myviewers.php?cmd=togglewhitelist&id=".$viewer['id']."&st=".$viewer['whitelisted']."\">Whitelist</a>";
 											?>
 										</td>
@@ -246,19 +249,21 @@
 								<?php endforeach; ?>
 							</table>
 						</form>
-						<div id="pagination">
+						<div id="pagination" style="text-align: center;">
 							<?php for($page=1; $page <= $total_pages ; $page++) :?>
 
 								<a href='<?php echo "?page=$page"; ?>' class="links"><?php  echo $page; ?>
-								 </a>
+								 </a>&nbsp;
 
 							<?php endfor; ?>
 						</div>
+						<!--
 						<div class="section-action-container">
 							<div class="section-button-container" id="update_button">
 								<div>Update</div>
 							</div>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>
