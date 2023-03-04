@@ -5,15 +5,15 @@
 
 	//get user id from uri
 	$id = trim( $_GET['id'] );
-	var_dump($id);
+
 
 	// get toggleban or togglewhitelist command
 	$cmd = trim( $_GET['cmd'] );
-	var_dump($cmd);
+
 
 	// get current states of viewer's banned or whitelisted fields
 	$st = trim( $_GET['st'] );
-	var_dump($st);
+
 
 	// if current state is true, set value to false, else set value to true
 	if ( $st == "true" ) {
@@ -23,7 +23,6 @@
 	} else {
 		$value = "error";
 	}
-	var_dump($value);
 
 	// obtain field for update based on user selection
 	if ( $cmd == "toggleban" ) {
@@ -33,7 +32,7 @@
 	} else {
 		$field = "error";
 	}
-	var_dump($field);
+
 
 	// validation checks
 	if ( $field == "error" || $value == "error" ) {
@@ -44,7 +43,7 @@
 		header( 'location: ../myviewers.php?message=Update%20Successful' ); // redirect to myviewers.php
 	}
 
-/*
+/**
 	if ($status == 'ok') {
 		header( 'location: ../myviewers.php' ); // redirect to myviewers.php
 	}
