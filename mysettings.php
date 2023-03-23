@@ -2,7 +2,7 @@
 /*
 * Module Name: 	Mysettings.php
 * Date: 		2/23/2023
-* Author:		J. Sayre		
+* Author:		J. Sayre and S. Dixon		
 * Purpose:		Enables user to view and interact with their request system settings. This form is very similar to setupsmr.php, except it pulls in a user's existing
 */
 
@@ -17,6 +17,16 @@
 		$fbUserInfo = getFacebookUserInfo( $_SESSION['user_info']['fb_access_token'] );
 		$fbDebugTokenInfo = getDebugAccessTokenInfo( $_SESSION['user_info']['fb_access_token'] );
 	}
+
+	//var_dump( $_SESSION['user_info']['id'] ); // checking id from session because you will use to get user details from userdetails table
+
+	if ( !isset( $_SESSION['user_details']['userId'] )) {
+		$userDetails = getRowWithValue( 'userdetails', 'id', $_SESSION['user_info']['id'] ); // get user details where id matches session id
+		$_SESSION['user_details'] = $userDetails; // save info to php session 
+	}
+
+	//var_dump( $_SESSION['user_details'] );
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -125,49 +135,51 @@
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
 						<div class="section-heading">My Settings</div>
-						<form id="mysettings_form" name="mysettings_form">
+						<form id="mysettings_form" name="mysettings_form" action="php/process_mysettings.php" method="post">
 						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 							<div id="error_message" class="error-message"></div>
 							<div>
 								<div class="section-label" title="">Twitch Channel Name</div>
-								<div><input class="form-input" type="text" name="twitch_channel" value="<?php echo $_SESSION['user_info']['twitch_channel']; ?>" /></div>
+								<div><input class="form-input" type="text" name="twitch_channel" value="<?php echo $_SESSION['user_details']['twitchChannel']; ?>" /></div>
 							</div>
 							<div>
 								<div class="section-label" title="">Stepmania Profile Name</div>
-								<div><input class="form-input" type="text" name="sm_profile" value="<?php echo $_SESSION['user_info']['sm_profile']; ?>" /></div>
+								<div><input class="form-input" type="text" name="sm_profile" value="<?php echo $_SESSION['user_details']['smProfile']; ?>" /></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Chatbot</div>
-								<div><select class="form-input" form="setupsmr_form" name="chatbot">
-										<option value="StreamElements">StreamElements</option>
-										<option value="NightBot">NightBot</option>
-										<option value="Lumia">Lumia</option>
-										<option value="Other">Other</option>
+								<div><select class="form-input" form="mysettings_form" name="chatbot">
+										<option <?php if($_SESSION['user_details']['chatbot'] == "StreamElements") echo "selected" ?> value="StreamElements">StreamElements</option>
+										<option <?php if($_SESSION['user_details']['chatbot'] == "NightBot") echo "selected" ?> value="NightBot">NightBot</option>
+										<option <?php if($_SESSION['user_details']['chatbot'] == "Lumia") echo "selected" ?> value="Lumia">Lumia</option>
+										<option <?php if($_SESSION['user_details']['chatbot'] == "Other") echo "selected" ?> value="Other">Other</option>
 									</select>
+								</div>
 							</div>
 							<div>
 								<div class="section-label" title="The system validates requests coming from your chat-bot. Your chat bot will have to include it to pass validation.">Security Key (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="security_key" value="<?php echo $_SESSION['user_info']['security_key']; ?>" /></div>
+								<div><input class="form-input" type="text" name="security_key" value="<?php echo $_SESSION['user_details']['securityKey']; ?>" /></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Maximum Requests (no more than 10)</div>
-								<div><input class="form-input" type="text" name="maxRequests" value="<?php echo $_SESSION['user_info']['maxRequests']; ?>" /></div>
+								<div><input class="form-input" type="text" name="maxRequests" value="<?php echo $_SESSION['user_details']['maxRequests']; ?>" /></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label" title="Determines how long a chatter needs to wait before requesitng again. (# of current requests * this value) = minutes between cooldowns.">Cooldown Interval (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="cooldownMultiplier" value="<?php echo $_SESSION['user_info']['cooldownMultiplier']; ?>"/></div>
+								<div><input class="form-input" type="text" name="cooldownMultiplier" value="<?php echo $_SESSION['user_details']['cooldownMultiplier']; ?>"/></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Scoring Type</div>
-								<div><select class="form-input" form="setupsmr_form" name="scoreType">
-										<option value="ITG">ITG</option>
-										<option value="DDR">DDR</option>
+								<div><select class="form-input" form="mysettings_form" name="scoreType">
+										<option <?php if($_SESSION['user_details']['scoreType'] == "ITG") echo "selected" ?> value="ITG">ITG</option>
+										<option <?php if($_SESSION['user_details']['scoreType'] == "DDR") echo "selected" ?> value="DDR">DDR</option>
 									</select></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="topPercent" value="<?php echo $_SESSION['user_info']['topPercent']; ?>" /></div>
+								<div><input class="form-input" type="text" name="topPercent" value="<?php echo $_SESSION['user_details']['topPercent']; ?>" /></div>
 							</div>
+							<input type="submit" value="Submit" >
 						</form>
 						<div class="section-action-container">
 							<div class="section-button-container" id="update_button">
