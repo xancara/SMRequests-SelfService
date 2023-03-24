@@ -41,7 +41,7 @@
 		header( 'location: mysongs.php?message=Update%20Failed' ); // redirect to myviewers.php
 	} else {
 		// update viewer's banned or whitelisted field in database
-		$check = updateSMRRow( '', SMR_PREFIX . 'songs', 'banned', $fvalue, $id );
+		$check = updateSMRRow( 'xancara', SMR_PREFIX . 'songs', 'banned', $fvalue, $id );
 		if($check) {
 			header( 'location: mysongs.php?message=Update%20Successful' ); // redirect to myviewers.php
 		} else {

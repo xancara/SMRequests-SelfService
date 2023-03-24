@@ -29,7 +29,7 @@ if (!isset($_GET['page'])) {
 $limit = 50;
 $offset = ($page - 1) * $limit;
 
-$total_pages = ceil(getSMRcountOnTable('', SMR_PREFIX . 'songs') / $limit);
+$total_pages = ceil(getSMRcountOnTable('xancara', SMR_PREFIX . 'songs') / $limit);
 //wh_log('Total Pages is ' . json_encode($total_pages));
 
 // Get additional Query Data from URL String
@@ -39,17 +39,17 @@ if (isset($_GET['ShowBanned'])) {
 	//Retrieve only banned songs
 	if (isset($_GET['query'])) {
 		$query = $_GET['query'];
-		$songlist = getSMRBannedSongsWithLimit('', $query, $limit, $offset);
+		$songlist = getSMRBannedSongsWithLimit('xancara', $query, $limit, $offset);
 	} else {
-		$songlist = getSMRBannedSongsWithLimit('', false, $limit, $offset);
+		$songlist = getSMRBannedSongsWithLimit('xancara', false, $limit, $offset);
 	}
 } else {
 	//Retrieve only banned songs
 	if (isset($_GET['query'])) {
 		$query = $_GET['query'];
-		$songlist = getSMRSongsWithLimit('', $query, $limit, $offset);
+		$songlist = getSMRSongsWithLimit('xancara', $query, $limit, $offset);
 	} else {
-		$songlist = getSMRSongsWithLimit('', false, $limit, $offset);
+		$songlist = getSMRSongsWithLimit('xancara', false, $limit, $offset);
 	}
 }
 //wh_log('Songlist data array is ' . json_encode($songlist));
