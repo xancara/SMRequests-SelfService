@@ -168,7 +168,7 @@
 							<div>
 								<div class="section-label">
 									<input type="checkbox" name="change_password" id="change_password" style="width:10px"/>
-									<label for="change_password">Change Passowrd</label>
+									<label for="change_password">Change Password</label>
 								</div>
 							</div>
 							<div id="change_password_section" style="display:none">
