@@ -382,6 +382,120 @@
 	}
 
 	/**
+	 * Get data from songs table with query, limit, and offset
+	 *
+	 * @param string $tableName
+	 * @param string $query
+	 * @param string $limit
+	 * @param string $offset
+	 *
+	 * @return array $data
+	 */
+	function getSMRSongsWithLimit( $smrUser, $query, $limit, $offset ) {
+		// get database connection
+		$databaseConnection = getSMRDatabaseConnection( $smrUser );
+		
+		//wh_log("Query is " . $query . " as we enter command");
+		
+		// create our sql statments
+		if(!isset($query) || !$query){
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		} else {
+			$query = urldecode($query);
+			
+			//wh_log("Query is " . $query . " after we ran urldecode");
+			
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		}			
+		//wh_log("Statement is " . json_encode($statement));
+		// execute sql with actual values
+		$statement->setFetchMode( PDO::FETCH_ASSOC );
+		$statement->execute();
+
+		// get and return data
+		$data = $statement->fetchALL();
+		return $data;
+	}
+		
+	/**
+	 * Get only banned data from songs table with query, limit, and offset
+	 *
+	 * @param string $tableName
+	 * @param string $query
+	 * @param string $limit
+	 * @param string $offset
+	 *
+	 * @return array $data
+	 */
+	function getSMRBannedSongsWithLimit( $smrUser, $query, $limit, $offset ) {
+		// get database connection
+		$databaseConnection = getSMRDatabaseConnection( $smrUser );
+		
+		//wh_log("Query is " . $query . " as we enter command");
+		
+		// create our sql statments
+		if(!isset($query) || !$query){
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND banned <> 0
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		} else {
+			$query = urldecode($query);
+			//wh_log("Query is " . $query . " after we ran urldecode");
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND banned <> 0 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		}			
+		//wh_log("Statement is " . json_encode($statement));
+		// execute sql with actual values
+		$statement->setFetchMode( PDO::FETCH_ASSOC );
+		$statement->execute();
+
+		// get and return data
+		$data = $statement->fetchALL();
+		return $data;
+	}	
+
+	/**
 	 * Sign a user up
 	 *
 	 * @param array $info
