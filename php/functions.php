@@ -482,6 +482,88 @@
 		return $hash;
 	}
 
+		/**
+	 * Generate a random password for use for DB user
+	 */
+	function randomPassword() {
+		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$pass = array(); //remember to declare $pass as an array
+		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $alphaLength);
+			$pass[] = $alphabet[$n];
+		}
+		return implode($pass); //turn the array into a string
+	}
+
+
+	/**
+	 * Insert user details upon SMRSetup completion
+	 * 
+	 * @param userId
+	 * @param twitchChannel
+	 * @param smProfile
+	 * @param chatbot
+	 * @param securityKey
+	 * @param maxRequests
+	 * @param cooldownMultiplier
+	 * @param scoreType
+	 * @param topPercent
+	 * 
+	 * @return boolean
+	 */
+	function insertUserDetails ($userId, $twitchChannel, $smProfile, $chatbot, $securityKey, $maxRequests, $cooldownMultiplier, $scoreType, $topPercent ){
+		// get database connection
+		$databaseConnection = getDatabaseConnection();
+
+		// create our sql statment
+		$statement = $databaseConnection->prepare( '
+		INSERT INTO
+				userDetails (
+					userId,
+					twitchChannel,
+					smProfile,
+					chatbot,
+					securityKey,
+					maxRequests,
+					cooldownMultiplier,
+					scoreType,
+					topPercent,
+					dbPass
+				)
+			VALUES (
+				:userId,
+				:twitchChannel,
+				:smProfile,
+				:chatbot,
+				:securityKey,
+				:maxRequests,
+				:cooldownMultiplier,
+				:scoreType,
+				:topPercent,
+				:dbPass
+			)
+		' );
+
+		// execute sql with actual values
+		$statement->execute( array(
+			'userId' => trim( $userId ),
+			'twitchChannel' => trim( $twitchChannel ),
+			'smProfile' => trim( $smProfile ),
+			'chatbot' => trim( $chatbot ),
+			'securityKey' => trim( $securityKey ),
+			'maxRequests' => trim( $maxRequests ),
+			'cooldownMultiplier' => trim( $cooldownMultiplier ),
+			'scoreType' => trim( $scoreType ),
+			'topPercent' => trim( $topPercent ),
+			'dbPass' => randomPassword(), 
+		) 
+	);
+
+		// return true upon success
+		return true;
+	}
+
 	/**
 	 * Check if user is logged in
 	 *
@@ -533,6 +615,41 @@
 	function isAdmin() {
 		if ( isset( $_SESSION['user_info'] ) && $_SESSION['user_info'] && USER_LEVEL_ADMIN == $_SESSION['user_info']['user_level'] ) {
 			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Check to see if the currently-authenticated user is not provisioned or higher AND whether they have submitted the SetupSMR form
+	function isSetupSubmitted() {
+		if ( isset( $_SESSION['user_info']) && $_SESSION['user_info']['user_level'] == 0 ) {
+			// get database connection
+			$databaseConnection = getDatabaseConnection();
+			//wh_log("Database connection is " . $databaseConnection . " right now." . PHP_EOL);
+
+			$userId = $_SESSION['user_info']['id'];
+			// create our sql statment
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					userId
+				FROM
+					userDetails
+				WHERE
+					userId = :userId
+			' );
+
+			// execute sql with actual values
+			$statement->setFetchMode( PDO::FETCH_ASSOC );
+			$statement->execute( array(
+				'userId' => trim( $userId )
+			) );
+			// get and return user
+			$submitted = $statement->fetch();
+			if (!empty($submitted['userId'])){
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}

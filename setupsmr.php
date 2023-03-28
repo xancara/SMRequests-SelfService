@@ -1,7 +1,7 @@
 <?php
 /*
-* Module Name: 	Setupsmr.php
-* Date: 		2/23/2023
+* Module Name: 	setupsmr.php
+* Date: 		2023-03-25
 * Author:		J. Sayre
 * Purpose:		Enables user to provide any necessary info to complete SMR setup. This page has similar content to mysettings.php, but is intended for initial use.
 */
@@ -112,13 +112,13 @@
 				loader.showLoader();
 
 				$.ajax( {
-					url: 'php/process_mysettings.php',
+					url: 'php/process_setupsmr.php',
 					data: $( '#setupsmr_form' ).serialize(),
 					type: 'post',
 					dataType: 'json',
 					success: function( data ) {
 						if ( 'ok' == data.status ) {
-							window.location.reload();
+							window.location.href = 'index.php'; //redirect to logged-in home
 						} else if ( 'fail' == data.status ) {
 							$( '#error_message' ).html( data.message );
 							loader.hideLoader();
@@ -142,48 +142,55 @@
 					<div class="site-content-section-inner">
 						<div class="section-heading">Complete SMR Setup</div>
 						<div>Almost there! We need a few more things to initially configure your request system.</div>
+						<div>Upon successful completion and save of this form, you will be redirected.</div>
+						<br>
 						<form id="setupsmr_form" name="setupsmr_form">
-						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
-							<div id="error_message" class="error-message"></div>
+						<div class="section-mid-container">
+						<div id="error_message" class="error-message"></div>
 							<div>
 								<div class="section-label" title="">Twitch Channel Name</div>
-								<div><input class="form-input" type="text" name="twitch_channel" value="" /></div>
+								<div><input class="form-input" type="text" name="twitch_channel" value="" required/></div>
 							</div>
+						</div>
+						<div class="section-mid-container">
 							<div>
 								<div class="section-label" title="">Stepmania Profile Name</div>
-								<div><input class="form-input" type="text" name="sm_profile" value="" /></div>
+								<div><input class="form-input" type="text" name="sm_profile" value="" required/></div>
 							</div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label">Chatbot</div>
+							<div><select class="form-input" form="setupsmr_form" name="chatbot">
+									<option value="StreamElements">StreamElements</option>
+									<option value="NightBot">NightBot</option>
+									<option value="Lumia">Lumia</option>
+									<option value="Other">Other</option>
+								</select></div>
+						</div>
 							<div class="section-mid-container">
-								<div class="section-label">Chatbot</div>
-								<div><select class="form-input" form="setupsmr_form" name="chatbot">
-										<option value="StreamElements">StreamElements</option>
-										<option value="NightBot">NightBot</option>
-										<option value="Lumia">Lumia</option>
-										<option value="Other">Other</option>
-									</select></div>
-							</div>
 							<div>
 								<div class="section-label" title="The system validates requests coming from your chat-bot. Your chat bot will have to include it to pass validation.">Security Key (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="security_key" value="" /></div>
+								<div><input class="form-input" type="text" name="security_key" value="" required/></div>
 							</div>
-							<div class="section-mid-container">
-								<div class="section-label">Maximum Requests (no more than 10)</div>
-								<div><input class="form-input" type="text" name="maxRequests" value="" /></div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label" title="Determines how long a chatter needs to wait before requesitng again. (# of current requests * this value) = minutes between cooldowns.">Cooldown Interval (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="cooldownMultiplier" value=""/></div>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label">Scoring Type</div>
-								<div><select class="form-input" form="setupsmr_form" name="scoreType">
-										<option value="ITG">ITG</option>
-										<option value="DDR">DDR</option>
-									</select>
-							</div>
-							<div class="section-mid-container">
-								<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="topPercent" value="0.01" /></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label">Maximum Requests (no more than 10)</div>
+							<div><input class="form-input" type="text" name="maxRequests" value="10" required/></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label" title="Determines how long a chatter needs to wait before requesitng again. (# of current requests * this value) = minutes between cooldowns.">Cooldown Interval (Hover for Info)</div>
+							<div><input class="form-input" type="text" name="cooldownMultiplier" value="0.5" required/></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label">Scoring Type</div>
+							<div><select class="form-input" form="setupsmr_form" name="scoreType">
+									<option value="ITG">ITG</option>
+									<option value="DDR">DDR</option>
+								</select></div>
+						</div>
+						<div class="section-mid-container">
+							<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
+							<div><input class="form-input" type="text" name="topPercent" value="0.1" required/></div>
 							</div>
 						</form>
 						<div class="section-action-container">
@@ -199,7 +206,6 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<?php /* Possible settings page content here */ ?>
 					</div>
 				</div>
 			</div>

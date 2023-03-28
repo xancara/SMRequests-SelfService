@@ -1,7 +1,7 @@
 <?php
 /*
 * Module Name: 	Index.php
-* Date: 		2023-02-04
+* Date: 		2023-03-25
 * Author:		J. Sayre
 *				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
 * Purpose:		Post-authentication landing page and navigation.
@@ -121,12 +121,28 @@
 							</a>
 						<?php endif; ?>
 					</div>
+					</div>
 					<h1>
 						Welcome to SMRequests!
 					</h1>
-					<div>
-						This is a skeleton of the main site that is based off of the open source code listed in the github link below. <br/>It has been modified to reflect all necessary functions for SMRequests. Development is just stating on this so hang in there with us while we work through things.
-					</div>
+					<div>This site is a work-in-progress; thanks for bearing with us!<br><br><br>
+						<div>
+							<?php
+							if (isLoggedIn()) {
+								if (isSetupSubmitted() ) : ?>
+									<div>Thanks for submitting your Setup Details!<br>
+										The SMRequests Admin team will contact you when your system is ready to use.<br><br>
+										Meanwhile, feel free to explore the <a href="https://github.com/MrTwinkles47/Stepmania-Stream-Tools-MrTwinkles/wiki/Getting-Started">Wiki</a> or join us on <a href="https://smrequests.com/discord">Discord</a>.</div>
+								<?php elseif (!isSetupSubmitted() && (!isProvisioned() && !isPremium() && !isAdmin())): ?>
+									<div>You're signed up! We still need some additional info to configure your system.<br>
+										You can complete the next step on the <a href="setupsmr.php">SetupSMR</a> page.</div>
+								<?php else : ?>
+									<div>For questions and support, join us on <a href="https://smrequests.com/discord">Discord</a>.</div>
+								<?php endif;
+						 	}	?></div>	
+							</div>
+							</div>
+							</div>
 				</div>
 			</div>
 		</div>
