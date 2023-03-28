@@ -24,7 +24,6 @@
 		$value = "error";
 	}
 
-
 	// obtain field for update based on user selection
 	if ( $cmd == "toggleban" ) {
 		$field = "banned";
@@ -48,7 +47,8 @@
 	if ($status == 'ok') {
 		header( 'location: ../myviewers.php' ); // redirect to myviewers.php
 	}
-
+*/
+/*
 	echo json_encode( // return json for ajax on front end
 		array(
 			'status' => $status,

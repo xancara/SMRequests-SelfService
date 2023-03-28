@@ -99,6 +99,52 @@
 	}
 
 	/**
+	 * Update user details
+	 *
+	 * @param array $details
+	 *
+	 * @return void
+	 */
+	function updateUserDetails( $details ) {
+		// get database connection
+		$databaseConnection = getDatabaseConnection();
+
+		// create our sql statment
+		$statement = $databaseConnection->prepare( '
+			UPDATE
+				userdetails
+			SET
+				twitchChannel = :twitchChannel,
+				smProfile = :smProfile,
+				chatbot = :chatbot,
+				securityKey = :securityKey,
+				maxRequests = :maxRequests,
+				cooldownMultiplier = :cooldownMultiplier,
+				scoreType = :scoreType
+				topPercent = :topPercent,
+			WHERE
+				id = :id
+		' );
+
+		$params  = array( //params 
+			'twitchChannel' => trim( $details['twitch_channel'] ),
+			'smProfile' => trim( $details['sm_profile'] ),
+			'chatbot' => trim( $details['chatbot'] ),
+			'securityKey' => trim( $details['security_key'] ),
+			'maxRequests' => trim( $details['maxRequests'] ),
+			'cooldownMultiplier' => trim( $details['cooldownMultiplier'] ),
+			'scoreType' => trim( $details['scoreType'] ),
+			'topPercent' => trim( $details['topPercent'] ),
+			'id' => trim( $details['id'] ),
+		);
+
+		//$params['id'] = $details['id']; // add id
+
+		// run the sql statement
+		$statement->execute( $params );
+	}
+
+	/**
 	 * Get row from a table with a value
 	 *
 	 * @param string $smRuser	 
