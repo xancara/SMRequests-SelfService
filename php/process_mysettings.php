@@ -1,45 +1,69 @@
 <?php
-	/* NEEDS TO BE UPDATED FOR SETTINGS; THIS IS JUST A COPY OF PROCESS_MYACCOUNT.PHP */
 
-	// load up global things
-	include_once '../autoloader.php';
+// load up global things
+include_once '../autoloader.php';
 
-	// get user info with key and get user info with email address
-	$userInfo = getRowWithValue( 'users', 'key_value', $_SESSION['user_info']['key_value'] );
-	$userInfoWithEmail = getUserWithEmailAddress( trim( $_POST['email'] ) );
+$userDetails = getRowWithValue( 'userdetails', 'id', $_SESSION['user_details']['id'] ); //get user details to compare with values posted
 
-	if ( !filter_var( trim( $_POST['email'] ), FILTER_VALIDATE_EMAIL ) ) { // check email address
-		$status = 'fail';
-		$message = 'Invalid Email';
-	} elseif ( !empty( $userInfoWithEmail ) && $_POST['email'] != $userInfo['email'] ) { // make sure if they are trying to change their email it is not already taken
-		$status = 'fail';
-		$message = 'Invalid Email';
-	} elseif ( !$_POST['first_name'] || !$_POST['last_name'] ) { // check name
-		$status = 'fail';
-		$message = 'Invalid first or last name';
-	} elseif ( isset( $_POST['change_password'] ) && ( !$_POST['password'] || $_POST['password'] != $_POST['confirm_password'] || strlen( $_POST['password'] ) < 8 ) ) { // check password/confirm password
-		$status = 'fail';
-		$message = 'Invalid password or passwords do not match and must be at least 8 characters';
-	} else { // all good!
-		$status = 'ok';
-		$message = 'valid';
+$id = $_SESSION['user_details']['id']; //get id
 
-		// add to post so we can pass along the key value of the user
-		$_POST['key_value'] = $userInfo['key_value'];
+$twitchChannel = $_POST['twitch_channel']; //get twitch channel name from post
+if ( $twitchChannel != $userDetails['twitchChannel'] ) {  //if twitch channel from post is not equal to value in database
+	updateRow( 'userDetails', 'twitchChannel', $twitchChannel, $id);   //update that row with new value from post
+}
 
-		// update the users info
-		updateUserInfo( $_POST );
+// Repeat same steps for each of the updatable fields
 
-		// get the user info so we have most recent info
-		$userInfo = getRowWithValue( 'users', 'key_value', $_SESSION['user_info']['key_value'] );
+$smProfile = $_POST['sm_profile'];
+if ( $smProfile != $userDetails['smProfile'] ) {
+	updateRow( 'userDetails', 'smProfile', $smProfile, $id );
+}
 
-		// update session with most recently updated user info
-		$_SESSION['user_info'] = $userInfo;
-	}
+$chatbot = $_POST['chatbot'];
+if ( $chatbot != $userDetails['chatbot'] ) {
+	updateRow( 'userDetails', 'chatbot', $chatbot, $id );
+}
 
+$securityKey = $_POST['security_key'];
+if ( $securityKey != $userDetails['securityKey'] ) {
+	updateRow( 'userDetails', 'securityKey', $securityKey, $id );
+}
+
+$maxRequests = $_POST['maxRequests'];
+if ( $maxRequests != $userDetails['maxRequests'] ) {
+	updateRow( 'userDetails', 'maxRequests', $maxRequests, $id );
+}
+
+$cooldownMultiplier = $_POST['cooldownMultiplier'];
+if ( $cooldownMultiplier != $userDetails['cooldownMultiplier'] ) {
+	updateRow( 'userDetails', 'cooldownMultiplier', $cooldownMultiplier, $id );
+}
+
+$scoreType = $_POST['scoreType'];
+if ( $scoreType != $userDetails['scoreType'] ) {
+	updateRow( 'userDetails', 'scoreType', $scoreType, $id );
+}
+
+$topPercent = $_POST['topPercent'];
+if ( $topPercent != $userDetails['topPercent'] ) {
+	updateRow( 'userDetails', 'topPercent', $topPercent, $id );
+}
+
+// get user details so we have most recent info
+$userDetails = getRowWithValue( 'userdetails', 'id', $_SESSION['user_details']['id'] );
+
+//update session with updated user details
+$_SESSION['user_details'] = $userDetails;
+
+// redirect to mysettings.php
+header( 'location: ../mysettings.php' );
+
+
+/*
 	echo json_encode( // return json for ajax on front end
 		array(
 			'status' => $status,
 			'message' => $message
 		)
 	);
+*/

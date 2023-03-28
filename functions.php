@@ -99,52 +99,6 @@
 	}
 
 	/**
-	 * Update user details
-	 *
-	 * @param array $details
-	 *
-	 * @return void
-	 */
-	function updateUserDetails( $details ) {
-		// get database connection
-		$databaseConnection = getDatabaseConnection();
-
-		// create our sql statment
-		$statement = $databaseConnection->prepare( '
-			UPDATE
-				userdetails
-			SET
-				twitchChannel = :twitchChannel,
-				smProfile = :smProfile,
-				chatbot = :chatbot,
-				securityKey = :securityKey,
-				maxRequests = :maxRequests,
-				cooldownMultiplier = :cooldownMultiplier,
-				scoreType = :scoreType
-				topPercent = :topPercent,
-			WHERE
-				id = :id
-		' );
-
-		$params  = array( //params 
-			'twitchChannel' => trim( $details['twitch_channel'] ),
-			'smProfile' => trim( $details['sm_profile'] ),
-			'chatbot' => trim( $details['chatbot'] ),
-			'securityKey' => trim( $details['security_key'] ),
-			'maxRequests' => trim( $details['maxRequests'] ),
-			'cooldownMultiplier' => trim( $details['cooldownMultiplier'] ),
-			'scoreType' => trim( $details['scoreType'] ),
-			'topPercent' => trim( $details['topPercent'] ),
-			'id' => trim( $details['id'] ),
-		);
-
-		//$params['id'] = $details['id']; // add id
-
-		// run the sql statement
-		$statement->execute( $params );
-	}
-
-	/**
 	 * Get row from a table with a value
 	 *
 	 * @param string $smRuser	 
@@ -216,8 +170,8 @@
 	/**
 	 * Get data from a table with limit and offset
 	 *
+	 * @param string $smrUser
 	 * @param string $tableName
-	 * @param string $column
 	 * @param string $limit
 	 * @param string $offset
 	 *
@@ -260,7 +214,6 @@
 	function getSMRcountOnTable( $smrUser, $tableName ) {
 		// get database connection
 		$databaseConnection = getSMRDatabaseConnection( $smrUser );
-
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
 			SELECT
@@ -315,6 +268,7 @@
 
 	/**
 	 * Update an SMR colum with a value in a table by id
+	 *
 	 * @param string $smrUser
 	 * @param string $tableName
 	 * @param string $column
@@ -326,7 +280,6 @@
 	function updateSMRRow( $smrUser, $tableName, $column, $value, $id ) {
 		// get database connection
 		$databaseConnection = getSMRDatabaseConnection($smrUser);
-
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
 			UPDATE
@@ -344,7 +297,12 @@
 		);
 
 		// run the query
-		$statement->execute( $params );
+		if($statement->execute( $params )){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -379,6 +337,120 @@
 
 		// run the query
 		$statement->execute( $params );
+	}
+
+	/**
+	 * Get data from songs table with query, limit, and offset
+	 *
+	 * @param string $tableName
+	 * @param string $query
+	 * @param string $limit
+	 * @param string $offset
+	 *
+	 * @return array $data
+	 */
+	function getSMRSongsWithLimit( $smrUser, $query, $limit, $offset ) {
+		// get database connection
+		$databaseConnection = getSMRDatabaseConnection( $smrUser );
+		
+		//wh_log("Query is " . $query . " as we enter command");
+		
+		// create our sql statments
+		if(!isset($query) || !$query){
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		} else {
+			$query = urldecode($query);
+			
+			//wh_log("Query is " . $query . " after we ran urldecode");
+			
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		}			
+		//wh_log("Statement is " . json_encode($statement));
+		// execute sql with actual values
+		$statement->setFetchMode( PDO::FETCH_ASSOC );
+		$statement->execute();
+
+		// get and return data
+		$data = $statement->fetchALL();
+		return $data;
+	}
+		
+	/**
+	 * Get only banned data from songs table with query, limit, and offset
+	 *
+	 * @param string $tableName
+	 * @param string $query
+	 * @param string $limit
+	 * @param string $offset
+	 *
+	 * @return array $data
+	 */
+	function getSMRBannedSongsWithLimit( $smrUser, $query, $limit, $offset ) {
+		// get database connection
+		$databaseConnection = getSMRDatabaseConnection( $smrUser );
+		
+		//wh_log("Query is " . $query . " as we enter command");
+		
+		// create our sql statments
+		if(!isset($query) || !$query){
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND banned <> 0
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		} else {
+			$query = urldecode($query);
+			//wh_log("Query is " . $query . " after we ran urldecode");
+			$statement = $databaseConnection->prepare( '
+				SELECT
+					*
+				FROM
+					sm_songs
+				WHERE
+					installed = 1 AND banned <> 0 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+				LIMIT
+					' . $limit . '
+				OFFSET 
+					' . $offset
+			);
+		}			
+		//wh_log("Statement is " . json_encode($statement));
+		// execute sql with actual values
+		$statement->setFetchMode( PDO::FETCH_ASSOC );
+		$statement->execute();
+
+		// get and return data
+		$data = $statement->fetchALL();
+		return $data;
 	}
 
 	/**
@@ -482,88 +554,6 @@
 		return $hash;
 	}
 
-		/**
-	 * Generate a random password for use for DB user
-	 */
-	function randomPassword() {
-		$alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-		$pass = array(); //remember to declare $pass as an array
-		$alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-		for ($i = 0; $i < 8; $i++) {
-			$n = rand(0, $alphaLength);
-			$pass[] = $alphabet[$n];
-		}
-		return implode($pass); //turn the array into a string
-	}
-
-
-	/**
-	 * Insert user details upon SMRSetup completion
-	 * 
-	 * @param userId
-	 * @param twitchChannel
-	 * @param smProfile
-	 * @param chatbot
-	 * @param securityKey
-	 * @param maxRequests
-	 * @param cooldownMultiplier
-	 * @param scoreType
-	 * @param topPercent
-	 * 
-	 * @return boolean
-	 */
-	function insertUserDetails ($userId, $twitchChannel, $smProfile, $chatbot, $securityKey, $maxRequests, $cooldownMultiplier, $scoreType, $topPercent ){
-		// get database connection
-		$databaseConnection = getDatabaseConnection();
-
-		// create our sql statment
-		$statement = $databaseConnection->prepare( '
-		INSERT INTO
-				userDetails (
-					userId,
-					twitchChannel,
-					smProfile,
-					chatbot,
-					securityKey,
-					maxRequests,
-					cooldownMultiplier,
-					scoreType,
-					topPercent,
-					dbPass
-				)
-			VALUES (
-				:userId,
-				:twitchChannel,
-				:smProfile,
-				:chatbot,
-				:securityKey,
-				:maxRequests,
-				:cooldownMultiplier,
-				:scoreType,
-				:topPercent,
-				:dbPass
-			)
-		' );
-
-		// execute sql with actual values
-		$statement->execute( array(
-			'userId' => trim( $userId ),
-			'twitchChannel' => trim( $twitchChannel ),
-			'smProfile' => trim( $smProfile ),
-			'chatbot' => trim( $chatbot ),
-			'securityKey' => trim( $securityKey ),
-			'maxRequests' => trim( $maxRequests ),
-			'cooldownMultiplier' => trim( $cooldownMultiplier ),
-			'scoreType' => trim( $scoreType ),
-			'topPercent' => trim( $topPercent ),
-			'dbPass' => randomPassword(), 
-		) 
-	);
-
-		// return true upon success
-		return true;
-	}
-
 	/**
 	 * Check if user is logged in
 	 *
@@ -615,41 +605,6 @@
 	function isAdmin() {
 		if ( isset( $_SESSION['user_info'] ) && $_SESSION['user_info'] && USER_LEVEL_ADMIN == $_SESSION['user_info']['user_level'] ) {
 			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Check to see if the currently-authenticated user is not provisioned or higher AND whether they have submitted the SetupSMR form
-	function isSetupSubmitted() {
-		if ( isset( $_SESSION['user_info']) && $_SESSION['user_info']['user_level'] == 0 ) {
-			// get database connection
-			$databaseConnection = getDatabaseConnection();
-			//wh_log("Database connection is " . $databaseConnection . " right now." . PHP_EOL);
-
-			$userId = $_SESSION['user_info']['id'];
-			// create our sql statment
-			$statement = $databaseConnection->prepare( '
-				SELECT
-					userId
-				FROM
-					userDetails
-				WHERE
-					userId = :userId
-			' );
-
-			// execute sql with actual values
-			$statement->setFetchMode( PDO::FETCH_ASSOC );
-			$statement->execute( array(
-				'userId' => trim( $userId )
-			) );
-			// get and return user
-			$submitted = $statement->fetch();
-			if (!empty($submitted['userId'])){
-				return true;
-			} else {
-				return false;
-			}
 		} else {
 			return false;
 		}
