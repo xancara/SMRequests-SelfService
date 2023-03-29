@@ -3,7 +3,8 @@
 * Module Name: 	Mysettings.php
 * Date: 		2/23/2023
 * Author:		J. Sayre and S. Dixon		
-* Purpose:		Enables user to view and interact with their request system settings. This form is very similar to setupsmr.php, except it pulls in a user's existing
+* Purpose:		Enables user to view and interact with their request system settings.
+				This form is very similar to setupsmr.php, except it pulls in a user's existing
 */
 
 	// Load global resources and establish a session
@@ -20,8 +21,8 @@
 
 	//var_dump( $_SESSION['user_info']['id'] ); // checking id from session because you will use to get user details from userdetails table
 
-	if ( !isset( $_SESSION['user_details']['userId'] )) {
-		$userDetails = getRowWithValue( 'userdetails', 'id', $_SESSION['user_info']['id'] ); // get user details where id matches session id
+	if ( !isset( $_SESSION['user_details'] )) {
+		$userDetails = getRowWithValue( 'userdetails', 'userId', $_SESSION['user_info']['id'] ); // get user details where id matches session id
 		$_SESSION['user_details'] = $userDetails; // save info to php session 
 	}
 
@@ -58,6 +59,22 @@
 				$( '#update_button' ).on( 'click', function() { // onclick for our update button
 					processMySettings();
 				} );
+
+				$( '#logout_link' ).on( 'click', function() { // on click for our logout link
+                    // show our loading overlay
+                    loader.showLoader();
+
+                    // server side logout
+                    $.ajax( {
+                        url: 'php/process_logout.php',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function( data ) {
+                            loader.hideLoader();
+                            window.location.href = "index.php";
+                        }
+                    } );
+                } );
 
 				$( '.form-input' ).keyup( function( e ) {
 					if ( e.keyCode == 13 ) { // our enter key
@@ -136,15 +153,14 @@
 					<div class="site-content-section-inner">
 						<div class="section-heading">My Settings</div>
 						<form id="mysettings_form" name="mysettings_form" action="php/process_mysettings.php" method="post">
-						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 							<div id="error_message" class="error-message"></div>
 							<div>
 								<div class="section-label" title="">Twitch Channel Name</div>
-								<div><input class="form-input" type="text" name="twitch_channel" value="<?php echo $_SESSION['user_details']['twitchChannel']; ?>" /></div>
+								<div><input class="form-input" type="text" name="twitch_channel" value="<?php echo $_SESSION['user_details']['twitchChannel']; ?>" required/></div>
 							</div>
 							<div>
 								<div class="section-label" title="">Stepmania Profile Name</div>
-								<div><input class="form-input" type="text" name="sm_profile" value="<?php echo $_SESSION['user_details']['smProfile']; ?>" /></div>
+								<div><input class="form-input" type="text" name="sm_profile" value="<?php echo $_SESSION['user_details']['smProfile']; ?>"  required/></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Chatbot</div>
@@ -158,15 +174,15 @@
 							</div>
 							<div>
 								<div class="section-label" title="The system validates requests coming from your chat-bot. Your chat bot will have to include it to pass validation.">Security Key (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="security_key" value="<?php echo $_SESSION['user_details']['securityKey']; ?>" /></div>
+								<div><input class="form-input" type="text" name="security_key" value="<?php echo $_SESSION['user_details']['securityKey']; ?>"  required/></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Maximum Requests (no more than 10)</div>
-								<div><input class="form-input" type="text" name="maxRequests" value="<?php echo $_SESSION['user_details']['maxRequests']; ?>" /></div>
+								<div><input class="form-input" type="text" name="maxRequests" value="<?php echo $_SESSION['user_details']['maxRequests']; ?>"  required/></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label" title="Determines how long a chatter needs to wait before requesitng again. (# of current requests * this value) = minutes between cooldowns.">Cooldown Interval (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="cooldownMultiplier" value="<?php echo $_SESSION['user_details']['cooldownMultiplier']; ?>"/></div>
+								<div><input class="form-input" type="text" name="cooldownMultiplier" value="<?php echo $_SESSION['user_details']['cooldownMultiplier']; ?>"  required/></div>
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label">Scoring Type</div>
@@ -177,9 +193,8 @@
 							</div>
 							<div class="section-mid-container">
 								<div class="section-label" title="Your system will use this to determine how to pull random queries. 0.1 means the top 10% of your played songs will be included.">Top Percent (Hover for Info)</div>
-								<div><input class="form-input" type="text" name="topPercent" value="<?php echo $_SESSION['user_details']['topPercent']; ?>" /></div>
+								<div><input class="form-input" type="text" name="topPercent" value="<?php echo $_SESSION['user_details']['topPercent']; ?>"  required/></div>
 							</div>
-							<input type="submit" value="Submit" >
 						</form>
 						<div class="section-action-container">
 							<div class="section-button-container" id="update_button">
@@ -194,7 +209,6 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<?php /* Possible settings page content here */ ?>
 					</div>
 				</div>
 			</div>
