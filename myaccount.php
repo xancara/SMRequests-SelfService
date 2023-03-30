@@ -1,8 +1,8 @@
 <?php
 /*
 * Module Name: 	Myaccount.php
-* Date: 		[DATE]
-* Author:		[AUTHOR]
+* Date: 		2023-02-23
+* Author:		J.Sayre
 *				Adapted from Easy, Code Is by Jstolpe Repository: https://github.com/jstolpe/easycodeis per request from maintainers.
 * Purpose:		Enables user to view and interact with their user account details.
 */
@@ -23,7 +23,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
+		<title>SMRequests Self-Service | My Account</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -138,10 +138,12 @@
 		</script>
 	</head>
 	<body>
+	<?php include('nav.php'); ?>
+
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>
@@ -298,6 +300,6 @@
 		<br />
 		<br />
 		<br />
-		<?php include('footer.php'); ?>
+		<?php //include('footer.php'); ?>
 	</body>
 </html>

@@ -422,7 +422,7 @@
 				FROM
 					sm_songs
 				WHERE
-					installed = 1 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+					installed = 1 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\' OR id like \'%' . $query . '%\')
 				LIMIT
 					' . $limit . '
 				OFFSET 
@@ -438,6 +438,36 @@
 		$data = $statement->fetchALL();
 		return $data;
 	}
+
+	/** Get list of packs from songs table
+	*
+	* @param string $smrUser
+	*
+	* @return array $data
+	*/
+   function getSMRPacks( $smrUser ) {
+	   // get database connection
+	   $databaseConnection = getSMRDatabaseConnection( $smrUser );
+	   
+	   //wh_log("Query is " . $query . " as we enter command");
+	   
+	   // create our sql statments
+		   $statement = $databaseConnection->prepare( '
+			   SELECT
+				   DISTINCT(pack)
+			   FROM
+				   sm_songs
+			   WHERE
+				   installed = 1'
+		   );
+	   // execute sql with actual values
+	   $statement->setFetchMode( PDO::FETCH_ASSOC );
+	   $statement->execute();
+
+	   // get and return data
+	   $data = $statement->fetchALL();
+	   return $data;
+   }
 		
 	/**
 	 * Get only banned data from songs table with query, limit, and offset
@@ -478,7 +508,7 @@
 				FROM
 					sm_songs
 				WHERE
-					installed = 1 AND banned <> 0 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR pack like \'%' . $query . '%\')
+					installed = 1 AND banned <> 0 AND (title like \'%' . $query . '%\' OR artist like \'' . $query . '%\' OR  like \'%' . $query . '%\')
 				LIMIT
 					' . $limit . '
 				OFFSET 

@@ -15,7 +15,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Account</title>
+		<title>SMRequests Self-Service | My Webhooks</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -105,8 +105,8 @@
 				loader.showLoader();
 
 				$.ajax( {
-					url: 'php/process_myaccount.php',
-					data: $( '#myaccount_form' ).serialize(),
+					url: 'php/process_mywebhooks.php',
+					data: $( '#mywebhooks_form' ).serialize(),
 					type: 'post',
 					dataType: 'json',
 					success: function( data ) {
@@ -122,10 +122,11 @@
 		</script>
 	</head>
 	<body>
+	<?php include('nav.php'); ?>
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>
@@ -133,8 +134,11 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-						<div class="section-heading">My Account</div>
-						<form id="myaccount_form" name="myaccount_form">
+						<div class="section-heading">My Webhooks</div>
+						<div class="section-mid-container">This page is under construction, but the SMRequests Admin team looks forward
+														   to announcing Webhook support for Premium SMRequests users in the near future.<br><br>
+														   Thank you for your support!</div>
+						<!-- <form id="mywebhooks_form" name="mywebhooks_form">
 							<div id="error_message" class="error-message">
 							</div>
 							<div>
@@ -170,7 +174,7 @@
 							<div class="section-button-container" id="update_button">
 								<div>Update</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

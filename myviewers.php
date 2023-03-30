@@ -40,7 +40,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Viewers</title>
+		<title>SMRequests Self-Service | My Viewers</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -147,10 +147,11 @@
 		</script>
 	</head>
 	<body>
+	<?php include('nav.php'); ?>
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>
@@ -207,7 +208,9 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-					<?php echo trim( $_GET['message'] ); ?>
+					<?php if (isset($_GET['message'])) : ?>
+								<p><?php echo urldecode($_GET['message']); ?></p>
+							<?php endif; ?>
 					<div class="section-heading">Viewer List</div>
 						<!-- - Sean Dixon - form to take in user input to indicate banned or whitelisted status -->
 						<form id="myviewers_form" name="myviewers_form">
@@ -271,6 +274,6 @@
 		<br />
 		<br />
 		<br />
-		<?php include('footer.php'); ?>
+		<?php //include('footer.php'); ?>
 	</body>
 </html>

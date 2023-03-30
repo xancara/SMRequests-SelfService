@@ -1,9 +1,9 @@
 <?php
 /*
 * Module Name: 	Mysongs.php
-* Date: 		2/26/2023
-* Author:		M. Seibel
-* Purpose:		Enables user to view and interact with their user song library.
+* Date: 		2023-03-30
+* Author:		M. Seibel & J. Sayre
+* Purpose:		Enables user to view and interact with their song library.
 */
 
 // Load global resources and establish a session
@@ -59,13 +59,13 @@ if (isset($_GET['ShowBanned'])) {
 
 <head>
 	<!-- title of our page -->
-	<title>SMRequests Development | My Songs</title>
+	<title>SMRequests Self-Service | My Songs</title>
 
 	<!-- include fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
 	<!-- mobile layout support -->
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalabel=no" />
 
 	<!-- css styles for our my account page-->
 	<link href="css/global.css" rel="stylesheet" type="text/css">
@@ -176,77 +176,66 @@ if (isset($_GET['ShowBanned'])) {
 </head>
 
 <body>
+	<?php include('nav.php'); ?>
+
 	<div class="site-header">
 		<div class="site-header-pad">
 			<a class="header-home-link" href="index.php">
-				SMRequests.Dev
+			SMRequests Self-Service
 			</a>
 		</div>
 	</div>
-	<?php
-	// $packlist = array();
+	<div>
+		<div class="center" style="width:40%;margin-inline-start:35rem;">
 
-	// if (strlen($query) > 0) {
-	// 	$packlist_sql = "SELECT pack, COUNT(id) AS id FROM sm_songs WHERE  installed = 1 AND (title LIKE '%{$query}%' OR subtitle LIKE '%{$query}%' OR artist LIKE '%{$query}%' OR id LIKE '%{$song_id}%') GROUP BY pack";
-	// } else {
-	// 	$packlist_sql = "SELECT pack, COUNT(id) AS id FROM sm_songs WHERE installed = 1 GROUP BY pack";
-	// }
-	// $result = mysqli_query($conn, $packlist_sql);
-	// while ($row = mysqli_fetch_assoc($result)) {
-	// 	$packlist = array_merge($packlist, array($row['pack'] => $row['id']));
-	// }
-	echo '<div>
-				<div class="w3-center w3-input w3-border w3-light-grey" style="width: 30%;margin-inline-start: 35rem;"
-				margin-inline-start: 35rem;">
-				<form method="GET">
-				<h2>Search Songs by:</h2>
-				<div class="input">
-				<div class="inputs">
-				<lable>Song ID:</lable>
-				<input type="TEXT" style="width:70%;height: 2rem;" name="song_id" value="';
-	echo isset($_GET['song_id']) ? $_GET['song_id'] : "";
-	echo '" placeholder="Enter ID" autofocus="AutoFocus" >
+			
+				<h2>Search Songs by: <?php echo isset($_GET['query']) ? $_GET['query'] : ""; ?></h2>
+				<div class="section-mid-container">
+					<form method="GET">
+					<label>Song ID:</label>
+						<input type="TEXT" name="query"	value="" placeholder="Enter ID" autofocus="AutoFocus" >
+							<div class="section-action-container">
+			   			<input type="SUBMIT" value="Search" style="width:25%" class="w3-btn w3-border"/>
+					</div>
+					</form>
 				</div>
-				<div class="inputs">
-				<lable>Song Title:</lable>
-				<input type="TEXT" style="width:62%;" name="query" value="';
-	echo isset($_GET['query']) ? $_GET['query'] : "";
-	echo '" placeholder="Input a song title or artist"/>
+				<div class="section-mid-container">
+					<form method="GET">
+					<label>Song Title:</label>
+						<input type="TEXT" name="query" value="" placeholder="Input a song title or artist"/>
+							<div class="section-action-container">
+			   			<input type="SUBMIT" value="Search" style="width:25%"  class="w3-btn w3-border"/>
+					</div>
+					</form>
 				</div>
-				<div class="inputs">
-				<lable>Pack:</lable>';
-	echo  '<select name="pack" id="pack" style="width:47%" class="">
-				<option value="none" selected disabled>Select a pack...</option>';
-	foreach ($packlist as $key => $value) {
-		echo '<option value="' . $key . '"';
-		if (isset($_GET['pack']) && $_GET['pack'] == $key) {
-			echo ' selected';
-		}
-		echo '>' . $key . ' [' . $value . ']</option>';
-	}
-	echo '</select>
+				<div class="section-mid-container">
+					<form method="GET">
+					<label>Pack:</label><br>
+					<?php $packlist = getSMRPacks('xancara'); ?>
+						<select name="query" class="form-input" id="pack" style="width:100%" >
+							<option value="none" selected disabled>Select a pack...</option>
+							<?php
+    							foreach ($packlist as $pack) {
+        							echo '<option value="' . $pack['pack'] . '">' . $pack['pack'] . '</option>';
+    							}
+   							 ?>
+						</select>
+						<div class="section-action-container">
+			   			<input type="SUBMIT" value="Search" style="width:25%"  class="w3-btn w3-border"/>
+					</div>
+						</form>
 				</div>
-				<div class="inputs">
-				<lable>Song length:</lable>
-				<input type="TEXT" style="width:55%;" name="song_length" value="';
-	echo isset($_GET['song_length']) ? $_GET['song_length'] : "";
-	echo '" placeholder="Enter song length"/>
-				</div>
-				';
+			
+			  			<a type="reset" href="mysongs.php" style="align-center">Reset</a>
+			  			<a type="button" href="mysongs.php?ShowBanned" style="align-center">View Banned Songs</a> </div></div>
+			</form>
+	</div></div>
 
-	echo '<div class="inputs">
-			   <input type="SUBMIT" value="Search" class="w3-btn w3-border"/>
-			  <a type="reset" href="mysongs.php" style="margin-left: 1rem;">Reset</a>
-			  <a type="button" href="mysongs.php?ShowBanned" style="margin-left: 1rem;">Banned Songs</a> </div></div>';
-	echo '</form>';
-	echo '</div></div>';
-	?>
 	<div class="site-content-container">
 		<div class="site-content-centered">
 			<div class="site-content-section">
 				<div class="site-content-section-inner">
 					<div class="section-heading">My Songs</div>
-					<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 					<div>
 						<div class="section-label">Song List</div>
 						<!-- Let's throw the message display box here-->
@@ -265,6 +254,7 @@ if (isset($_GET['ShowBanned'])) {
 							echo '<a href="mysongs.php">Show All Songs</a>';
 						}
 						?>
+
 						<!-- Add Search form that calls back to getSMRsongslist with query data -->
 
 						<!-- Going to start the actual table here. Nothing fancy for the time being. -->
@@ -275,11 +265,11 @@ if (isset($_GET['ShowBanned'])) {
 									<th>Title</th>
 									<th>Artist</th>
 									<th>Pack</th>
-									<th>Length</th>
+									<th title="In seconds">Length</th>
 									<th>BPM</th>
-									<th>Banned?</th>
-									<th>Toggle Banned</th>
-									<th>Toggle Random</th>
+									<th title="0=Available; 1=Banned from Request; 2=Banned from !random-type Requests">Banned?</th>
+									<th title="This means this song won't be available for request">Toggle Banned</th>
+									<th title="This means your audience can request it, but it won't be selected via !random-type Requests">Toggle Random</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -317,11 +307,11 @@ if (isset($_GET['ShowBanned'])) {
 									<th>Title</th>
 									<th>Artist</th>
 									<th>Pack</th>
-									<th>Length</th>
+									<th title="In seconds">Length</th>
 									<th>BPM</th>
-									<th>Banned?</th>
-									<th>Toggle Banned</th>
-									<th>Toggle Random</th>
+									<th title="0=Available; 1=Banned from Request; 2=Banned from !random-type Requests">Banned?</th>
+									<th title="This means this song won't be available for request">Toggle Banned</th>
+									<th title="This means your audience can request it, but it won't be selected via !random-type Requests">Toggle Random</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -344,13 +334,6 @@ if (isset($_GET['ShowBanned'])) {
 						</div>
 					</div>
 
-					<!--
-					<div class="section-action-container">
-						<div class="section-button-container" id="update_button">
-							<div>Update</div>
-						</div>
-					</div>
-					-->
 				</div>
 			</div>
 		</div>
@@ -359,7 +342,6 @@ if (isset($_GET['ShowBanned'])) {
 		<div class="site-content-centered">
 			<div class="site-content-section">
 				<div class="site-content-section-inner">
-					<?php /* Possible viewers page content here */ ?>
 				</div>
 			</div>
 		</div>
@@ -367,7 +349,7 @@ if (isset($_GET['ShowBanned'])) {
 	<br />
 	<br />
 	<br />
-	<?php include('footer.php'); ?>
+	<?php //include('footer.php'); ?>
 </body>
 
 </html>

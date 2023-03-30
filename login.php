@@ -57,7 +57,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development Site | Login</title>
+		<title>SMRequests Self-Service | Login</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -139,7 +139,7 @@
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					<span id="icon"></span>&nbsp;SMRequests
+					<span id="icon"></span>&nbsp;SMRequests Self-Service
 				</a>
 			</div>
 		</div>
