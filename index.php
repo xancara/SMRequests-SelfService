@@ -63,6 +63,16 @@
 				} );
 			} );
 		</script>
+		<style>.hamburger-icon span {
+  				height: 5px;
+  				width: 40px;
+  				background-color: white;
+  				display: block;
+ 				margin: 5px 0px 5px 0px;
+  				transition: 0.7s ease-in-out;
+  				transform: none;
+			}
+		</style>
 	</head>
 	<body>
 	<?php include('nav.php'); ?>

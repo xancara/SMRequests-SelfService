@@ -21,6 +21,9 @@
         <div class="menu-pane">
             <nav>
                 <ul class="menu-links">
+                <li>
+                    <a class="a-default" href="index.php">Home</a> <!-- shown to all logged-in users -->
+                </li>
             <?php if (isLoggedIn()) : ?>
                 <?php if (isAdmin()) : ?>
                     <li>
