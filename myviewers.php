@@ -161,7 +161,6 @@
 					<div class="site-content-section-inner">
 						<div class="section-heading">My Viewers</div>
 						<form id="myviewers_form" name="myviewers_form">
-						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 							<div id="error_message" class="error-message">
 							</div>
 							<div>
@@ -218,10 +217,10 @@
 								<tr style="text-align:center;">
 									<th style="display:none;">id</th>
 									<th style="display:none;">twitchid</th>
-									<th>name</th>
-									<th>dateadded</th>
-									<th>banned</th>
-									<th>whitelisted</th>
+									<th>Name</th>
+									<th>Date Added</th>
+									<th>Banned</th>
+									<th>Whitelisted</th>
 									<th>Status</th>
 									<th>Toggle Ban</th>
 									<th>Toggle Whitelist</th>
