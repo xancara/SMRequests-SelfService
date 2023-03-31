@@ -162,7 +162,7 @@
 						<div class="section-action-container">
 							<a href="<?php echo $twitchLoginUrl; ?>" class="a-twitch">
 								<div class="twitch-button-container">
-									Login with Twitch (PHP)
+									Sign Up with Twitch (PHP)
 								</div>
 							</a>
 						</div>
