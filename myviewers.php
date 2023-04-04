@@ -219,8 +219,8 @@
 									<th style="display:none;">twitchid</th>
 									<th>Name</th>
 									<th>Date Added</th>
-									<th>Banned</th>
-									<th>Whitelisted</th>
+									<th visibility: hidden>Banned</th>
+									<th visibility: hidden>Whitelisted</th>
 									<th>Status</th>
 									<th>Toggle Ban</th>
 									<th>Toggle Whitelist</th>
@@ -231,10 +231,10 @@
 										<td style="display:none;"><?php echo $viewer['twitchid']; ?></td>
 										<td><?php echo $viewer['name']; ?></td>
 										<td><?php echo $viewer['dateadded']; ?></td>
-										<td><?php echo $viewer['banned']; ?></td>
-										<td><?php echo $viewer['whitelisted']; ?></td>
+										<td visibility: hidden><?php echo $viewer['banned']; ?></td>
+										<td visibility: hidden><?php echo $viewer['whitelisted']; ?></td>
 									<?php if( $viewer['whitelisted'] === 'true' ) { ?>
-										<td>White Listed</td>
+										<td>Whitelisted</td>
 									<?php } elseif( $viewer['banned'] === 'true') { ?>
 										<td>Banned</td>
 									<?php } else { ?>
