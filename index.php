@@ -14,7 +14,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | WIP</title>
+		<title>SMRequests Self-Service</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -63,9 +63,20 @@
 				} );
 			} );
 		</script>
+		<style>.hamburger-icon span {
+  				height: 5px;
+  				width: 40px;
+  				background-color: white;
+  				display: block;
+ 				margin: 5px 0px 5px 0px;
+  				transition: 0.7s ease-in-out;
+  				transform: none;
+			}
+		</style>
 	</head>
 	<body>
-		<!--Low-Priority Request from Maintainers: Replace Video with some other asset-->
+	<?php include('nav.php'); ?>
+		
 		<div class="background-video-container">
 			<video class="background-video-element" autoplay muted loop >
 				<source src="assets/background_video.mp4" />
@@ -125,7 +136,7 @@
 					<h1>
 						Welcome to SMRequests!
 					</h1>
-					<div>This site is a work-in-progress; thanks for bearing with us!<br><br><br>
+					<div>Thank you for using SMRequests!<br><br><br>
 						<div>
 							<?php
 							if (isLoggedIn()) {
@@ -146,6 +157,6 @@
 				</div>
 			</div>
 		</div>
-		<?php include('footer.php'); ?>
+		<?php //include('footer.php'); ?> 
 	</body>
 </html>

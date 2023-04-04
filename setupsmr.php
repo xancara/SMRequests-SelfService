@@ -22,7 +22,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | Setup SMR</title>
+		<title>SMRequests Self-Service | Setup SMR</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -129,10 +129,12 @@
 		</script>
 	</head>
 	<body>
+	<?php include('nav.php'); ?>
+	
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>

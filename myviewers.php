@@ -40,7 +40,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | My Viewers</title>
+		<title>SMRequests Self-Service | My Viewers</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -147,10 +147,11 @@
 		</script>
 	</head>
 	<body>
+	<?php include('nav.php'); ?>
 		<div class="site-header">
 			<div class="site-header-pad">
 				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>
@@ -160,7 +161,6 @@
 					<div class="site-content-section-inner">
 						<div class="section-heading">My Viewers</div>
 						<form id="myviewers_form" name="myviewers_form">
-						<?php /* UPDATE SETTINGS FORM! THIS IS STILL A TEMPLATE OF THE MY ACCOUNT PAGE */ ?>
 							<div id="error_message" class="error-message">
 							</div>
 							<div>
@@ -207,7 +207,9 @@
 			<div class="site-content-centered">
 				<div class="site-content-section">
 					<div class="site-content-section-inner">
-					<?php echo trim( $_GET['message'] ); ?>
+					<?php if (isset($_GET['message'])) : ?>
+								<p><?php echo urldecode($_GET['message']); ?></p>
+							<?php endif; ?>
 					<div class="section-heading">Viewer List</div>
 						<!-- - Sean Dixon - form to take in user input to indicate banned or whitelisted status -->
 						<form id="myviewers_form" name="myviewers_form">
@@ -215,10 +217,10 @@
 								<tr style="text-align:center;">
 									<th style="display:none;">id</th>
 									<th style="display:none;">twitchid</th>
-									<th>name</th>
-									<th>dateadded</th>
-									<th>banned</th>
-									<th>whitelisted</th>
+									<th>Name</th>
+									<th>Date Added</th>
+									<th visibility: hidden>Banned</th>
+									<th visibility: hidden>Whitelisted</th>
 									<th>Status</th>
 									<th>Toggle Ban</th>
 									<th>Toggle Whitelist</th>
@@ -229,10 +231,10 @@
 										<td style="display:none;"><?php echo $viewer['twitchid']; ?></td>
 										<td><?php echo $viewer['name']; ?></td>
 										<td><?php echo $viewer['dateadded']; ?></td>
-										<td><?php echo $viewer['banned']; ?></td>
-										<td><?php echo $viewer['whitelisted']; ?></td>
+										<td visibility: hidden><?php echo $viewer['banned']; ?></td>
+										<td visibility: hidden><?php echo $viewer['whitelisted']; ?></td>
 									<?php if( $viewer['whitelisted'] === 'true' ) { ?>
-										<td>White Listed</td>
+										<td>Whitelisted</td>
 									<?php } elseif( $viewer['banned'] === 'true') { ?>
 										<td>Banned</td>
 									<?php } else { ?>
@@ -271,6 +273,6 @@
 		<br />
 		<br />
 		<br />
-		<?php include('footer.php'); ?>
+		<?php //include('footer.php'); ?>
 	</body>
 </html>
