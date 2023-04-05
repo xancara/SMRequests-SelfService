@@ -413,7 +413,7 @@
 			);
 		} else {
 			$query = urldecode($query);
-			
+			$query = str_replace("'", "''", $query);
 			//wh_log("Query is " . $query . " after we ran urldecode");
 			
 			$statement = $databaseConnection->prepare( '
@@ -663,7 +663,7 @@
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
 		INSERT INTO
-				userDetails (
+				userdetails (
 					userId,
 					twitchChannel,
 					smProfile,
@@ -777,7 +777,7 @@
 				SELECT
 					userId
 				FROM
-					userDetails
+					userdetails
 				WHERE
 					userId = :userId
 			' );

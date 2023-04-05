@@ -65,7 +65,7 @@ if (isset($_GET['ShowBanned'])) {
 	<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
 
 	<!-- mobile layout support -->
-	<meta name="viewport" content="initial-scale=1.0, user-scalabel=no" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 	<!-- css styles for our my account page-->
 	<link href="css/global.css" rel="stylesheet" type="text/css">

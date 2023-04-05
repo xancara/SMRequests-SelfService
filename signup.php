@@ -17,7 +17,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | Sign Up</title>
+		<title>SMRequests Self-Service | Sign Up</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
@@ -94,8 +94,8 @@
 	<body>
 		<div class="site-header">
 			<div class="site-header-pad">
-				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+			<a class="header-home-link" href="index.php">
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>

@@ -233,10 +233,10 @@
 										<td><?php echo $viewer['dateadded']; ?></td>
 										<td visibility: hidden><?php echo $viewer['banned']; ?></td>
 										<td visibility: hidden><?php echo $viewer['whitelisted']; ?></td>
-									<?php if( $viewer['whitelisted'] === 'true' ) { ?>
-										<td>Whitelisted</td>
-									<?php } elseif( $viewer['banned'] === 'true') { ?>
+									<?php if( $viewer['banned'] === 'true' ) { ?>
 										<td>Banned</td>
+									<?php } elseif( $viewer['whitelisted'] === 'true') { ?>
+										<td>Whitelisted</td>
 									<?php } else { ?>
 										<td>default</td>	
 									<?php	}	?>

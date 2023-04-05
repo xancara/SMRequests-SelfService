@@ -137,7 +137,8 @@
 						<div class="section-heading">My Webhooks</div>
 						<div class="section-mid-container">This page is under construction, but the SMRequests Admin team looks forward
 														   to announcing Webhook support for Premium SMRequests users in the near future.<br><br>
-														   Thank you for your support!</div>
+														   Thank you for your support!<br><br>
+														   Return <a href=index.php>home</a>.</div>
 						<!-- <form id="mywebhooks_form" name="mywebhooks_form">
 							<div id="error_message" class="error-message">
 							</div>
@@ -286,6 +287,6 @@
 		<br />
 		<br />
 		<br />
-		<?php include('footer.php'); ?>
+		<?php //include('footer.php'); ?>
 	</body>
 </html>
