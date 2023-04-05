@@ -94,8 +94,8 @@
 	<body>
 		<div class="site-header">
 			<div class="site-header-pad">
-				<a class="header-home-link" href="index.php">
-					SMRequests.Dev
+			<a class="header-home-link" href="index.php">
+				SMRequests Self-Service
 				</a>
 			</div>
 		</div>
