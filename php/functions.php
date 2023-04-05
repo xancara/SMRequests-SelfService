@@ -663,7 +663,7 @@
 		// create our sql statment
 		$statement = $databaseConnection->prepare( '
 		INSERT INTO
-				userDetails (
+				userdetails (
 					userId,
 					twitchChannel,
 					smProfile,
@@ -777,7 +777,7 @@
 				SELECT
 					userId
 				FROM
-					userDetails
+					userdetails
 				WHERE
 					userId = :userId
 			' );
