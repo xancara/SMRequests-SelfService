@@ -17,7 +17,7 @@
 <html>
 	<head>
 		<!-- title of our page -->
-		<title>SMRequests Development | Sign Up</title>
+		<title>SMRequests Self-Service | Sign Up</title>
 
 		<!-- include fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">

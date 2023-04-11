@@ -84,7 +84,7 @@
 			<img class="background-video-image" src="assets/background_video_image.png" />
 			<div class="background-video-overlay"></div>
 			<div class="background-video-text-overlay">
-				<div>SMRequests Development | Work In Progress</div>
+				<div>SMRequests Self-Service | Work In Progress</div>
 				<!--Desktop Client Experience-->
 				<div class="action-container pc-only">
 					<?php if ( isLoggedIn() ) : ?> <!--Check for logged-in user and greet-->

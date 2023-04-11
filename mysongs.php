@@ -315,26 +315,37 @@ if (isset($_GET['ShowBanned'])) {
 								</tr>
 							</tfoot>
 						</table>
-						<div id="pagination" style="text-align: center;">
-							<?php for ($page = 1; $page <= $total_pages; $page++) : ?>
-								<?php if (!isset($_GET['ShowBanned']) && !isset($_GET['query'])) : ?>
-									<a href='<?php echo "?page=$page"; ?>' class="links"><?php echo $page; ?>
-									</a>&nbsp;
-								<?php elseif (!isset($_GET['ShowBanned']) && isset($_GET['query'])) : ?>
-									<a href='<?php echo "?query=" . $_GET['query'] . "&page=$page"; ?>' class="links"><?php echo $page; ?>
-									</a>&nbsp;
-								<?php elseif (isset($_GET['ShowBanned']) && isset($_GET['query'])) : ?>
-									<a href='<?php echo "?ShowBanned&query=" . $_GET['query'] . "&page=$page"; ?>' class="links"><?php echo $page; ?>
-									</a>&nbsp;
-								<?php else : ?>
-									<a href='<?php echo "?ShowBanned&page=$page"; ?>' class="links"><?php echo $page; ?>
-									</a>&nbsp;
-								<?php endif; ?>
-							<?php endfor; ?>
-						</div>
+
+					<div id="pagination" style="text-align: center;">
+						<?php if ($total_pages > 1): ?>
+							<?php if ($page > 1): ?>
+								<a href="<?php echo '?page=1'; ?>" class="links">&laquo; First</a>&nbsp;
+								<a href="<?php echo '?page='.($page-1); ?>" class="links">&lsaquo; Previous</a>&nbsp;
+							<?php endif; ?>
+							<?php if ($page > 3): ?>
+								<a href="<?php echo '?page='.($page-2); ?>" class="links"><?php echo ($page-2); ?></a>&nbsp;
+							<?php endif; ?>
+							<?php if ($page > 2): ?>
+								<a href="<?php echo '?page='.($page-1); ?>" class="links"><?php echo ($page-1); ?></a>&nbsp;
+							<?php endif; ?>
+							<span class="current-page"><?php echo $page; ?></span>&nbsp;
+							<?php if ($page < ($total_pages - 1)): ?>
+								<a href="<?php echo '?page='.($page+1); ?>" class="links"><?php echo ($page+1); ?></a>&nbsp;
+							<?php endif; ?>
+							<?php if ($page < ($total_pages - 2)): ?>
+								<a href="<?php echo '?page='.($page+2); ?>" class="links"><?php echo ($page+2); ?></a>&nbsp;
+							<?php endif; ?>
+							<?php if ($page < ($total_pages)): ?>
+								<a href="<?php echo '?page='.($page+1); ?>" class="links">Next &rsaquo;</a>&nbsp;
+								<a href="<?php echo '?page='.($total_pages); ?>" class="links">Last &raquo;</a>&nbsp;
+							<?php endif; ?>
+						<?php endif; ?>
 					</div>
 
 				</div>
+			</div>
+
+			</div>
 			</div>
 		</div>
 	</div>
