@@ -1,8 +1,7 @@
 <?php
-	/* NEEDS TO BE UPDATED FOR SONGS; THIS IS JUST A COPY OF PROCESS_MYACCOUNT.PHP */
 
 	// load up global things
-	include_once 'autoloader.php';
+	include_once '../autoloader.php';
 
 	//get user id from uri
 	$id = trim( $_GET['id'] );
@@ -38,14 +37,14 @@
 
 	// validation checks
 	if ( $fvalue == "error" ) {
-		header( 'location: mysongs.php?message=Update%20Failed' ); // redirect to myviewers.php
+		header( 'location: ../mysongs.php?message=Update%20Failed' ); // redirect to myviewers.php
 	} else {
 		// update viewer's banned or whitelisted field in database
 		$check = updateSMRRow( 'xancara', SMR_PREFIX . 'songs', 'banned', $fvalue, $id );
 		if($check) {
-			header( 'location: mysongs.php?message=Update%20Successful' ); // redirect to myviewers.php
+			header( 'location: ../mysongs.php?message=Update%20Successful' ); // redirect to myviewers.php
 		} else {
-			header( 'location: mysongs.php?message=No%20idea' );
+			header( 'location: ../mysongs.php?message=No%20idea' );
 		}
 	}
 
