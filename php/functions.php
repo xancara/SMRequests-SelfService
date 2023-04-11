@@ -414,7 +414,6 @@
 		} else {
 			$query = urldecode($query);
 			$query = str_replace("'", "''", $query);
-			
 			//wh_log("Query is " . $query . " after we ran urldecode");
 			
 			$statement = $databaseConnection->prepare( '
