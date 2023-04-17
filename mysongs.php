@@ -293,9 +293,9 @@ if (isset($_GET['ShowBanned'])) {
 											echo "<td>" . $song['banned'] . " </td>";
 										}
 										echo "<td>";
-										echo "<a href=\"process_mysongs.php?cmd=toggleban&id=" . $song['id'] . "&state=" . $song['banned'] . "\">Request Ban</a>";
+										echo "<a href=\"php/process_mysongs.php?cmd=toggleban&id=" . $song['id'] . "&state=" . $song['banned'] . "\">Request Ban</a>";
 										echo "</td><td>";
-										echo "<a href=\"process_mysongs.php?cmd=togglerand&id=" . $song['id'] . "&state=" . $song['banned'] . "\">Random Ban</a>";
+										echo "<a href=\"php/process_mysongs.php?cmd=togglerand&id=" . $song['id'] . "&state=" . $song['banned'] . "\">Random Ban</a>";
 										echo "</td>";
 										?>
 									</tr>

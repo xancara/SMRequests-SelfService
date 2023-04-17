@@ -2,7 +2,7 @@
 * Module Name: 	footer.php
 * Date: 		2023-03-25
 * Author:		J. Sayre
-* Purpose:		Footer navigation for inclusion on all site pages for persistence and ease-of-updating.
+* Purpose:		Deprecated Footer navigation for inclusion on all site pages for persistence and ease-of-updating.
 */
 ?>
 
